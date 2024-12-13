@@ -125,6 +125,78 @@
 }
 </style>
 <style>
+    .tags-navigation {
+        text-align: center;
+        margin: 20px 0;
+        padding: 0 10px; /* 居中对齐并适配移动端 */
+    }
+
+    .tag-nav {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        max-width: 250px; /* 限制宽度适配移动端 */
+        padding: 12px 20px;
+        margin: 10px auto;
+        font-size: 16px;
+        font-weight: bold;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: white;
+        background: linear-gradient(90deg, #4caf50, #2196f3); /* 蓝绿色渐变 */
+        background-size: 200% 200%; /* 背景动画范围 */
+        border-radius: 30px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease-in-out;
+        position: relative;
+        cursor: pointer;
+        animation: gradient-animation 3s infinite; /* 添加背景动画 */
+    }
+
+    .tag-nav span {
+        display: inline-block;
+        margin-left: 8px;
+    }
+
+    .tag-nav::before {
+        content: '➤'; /* 在文字左侧添加箭头 */
+        font-size: 18px;
+        margin-right: 10px;
+        color: white;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .tag-nav:hover {
+        transform: translateY(-2px); /* 悬浮略微浮起 */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .tag-nav:hover::before {
+        transform: translateX(-5px); /* 悬浮时箭头略微左移 */
+    }
+
+    .tag-nav:active {
+        transform: translateY(3px); /* 点击时按下 */
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    @keyframes gradient-animation {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+</style>
+
+
+
+<style>
         .map-button-animated {
             display: inline-block;
             margin-top: 10px;
@@ -169,7 +241,21 @@
 <div class="header">
 <h1>Yolo Guidebook</h1>
 </div>
-<div class="restaurant">
+<div class="tags-navigation">
+    <a href="#Michelin" class="tag-nav">🍴 Michelin</a>
+    <a href="#Street-food" class="tag-nav">🌮 Street Food</a>
+    <a href="#Delicacy" class="tag-nav">🍰 Delicacy</a>
+    <a href="#Museum" class="tag-nav">🏛️ Museum</a>
+    <a href="#Park" class="tag-nav">🌳 Park</a>
+    <a href="#Tourist-Attraction" class="tag-nav">📸 Tourist Attraction</a>
+    <a href="#Shopping-Center" class="tag-nav">🛍️ Shopping Center</a>
+    <a href="#Local-Market" class="tag-nav">🧺 Local Market</a>
+    <a href="#Pub-Lover" class="tag-nav">🍻 Pub-Lover</a>
+    <a href="#Coffee-Lover" class="tag-nav">☕ Coffee-Lover</a>
+    <a href="#Spa-Relaxation" class="tag-nav">💆 Spa & Relaxation</a>
+    <!-- Add more categories as needed -->
+</div>
+<div class="restaurant" id="Michelin">
 <div class="restaurant-content">
 <h2>Artur</h2>
 <p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (288 reviews)</p>
@@ -489,7 +575,7 @@
 <p><strong>🏆 Labels:</strong> Michelin</p>
 </div>
 <a class_="map-button-animated" href="https://www.google.com/maps/place/Bangkok+Bold+Kitchen+at+Central+Embassy/data=!4m7!3m6!1s0x30e29fa8177a2d69:0x16bcfc9d43c6d059!8m2!3d13.7441064!4d100.546082!16s%2Fg%2F11b88h4lyq!19sChIJaS16F6if4jARWdDGQ538vBY?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
-<div class="restaurant">
+<div class="restaurant" id="Street-food">
 <div class="restaurant-content">
 <h2>ฟ้าปลาทาน เซ็นทรัล ชิดลม Fá Plā Tahń Central Childlom</h2>
 <p><strong>⭐ Rating:</strong> <span class="rating">4.1</span> (128 reviews)</p>
@@ -879,7 +965,7 @@
 <p><strong>🏆 Labels:</strong> Street food</p>
 </div>
 <a class_="map-button-animated" href="https://www.google.com/maps/place/Addictions+by+Kitch+Witch/data=!4m7!3m6!1s0x30e29f82330393f9:0xea772bf48db6546f!8m2!3d13.7407037!4d100.5632686!16s%2Fg%2F1yfdqx771!19sChIJ-ZMDM4Kf4jARb1S2jfQrd-o?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
-<div class="restaurant">
+<div class="restaurant" id="Delicacy">
 <div class="restaurant-content">
 <h2>Viva Cafe Soi 8</h2>
 <p><strong>⭐ Rating:</strong> <span class="rating">4.3</span> (1312 reviews)</p>
@@ -1159,7 +1245,7 @@
 <p><strong>🏆 Labels:</strong> Delicacy</p>
 </div>
 <a class_="map-button-animated" href="https://www.google.com/maps/place/19seafood/data=!4m7!3m6!1s0x30e29fea4df642f9:0x7539aa0503d3b388!8m2!3d13.752051!4d100.5355919!16s%2Fg%2F11j8jygh_h!19sChIJ-UL2Teqf4jARiLPTAwWqOXU?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
-<div class="restaurant">
+<div class="restaurant" id="Museum">
 <div class="restaurant-content">
 <h2>Madame Tussauds BANGKOK</h2>
 <p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (8528 reviews)</p>
@@ -1319,7 +1405,7 @@
 <p><strong>🏆 Labels:</strong> Museum</p>
 </div>
 <a class_="map-button-animated" href="https://www.google.com/maps/place/King+Prajadhipok+Museum/data=!4m7!3m6!1s0x30e299157a769a43:0x99b3ccf1ea576a1a!8m2!3d13.7561405!4d100.5064072!16s%2Fm%2F043k6v5!19sChIJQ5p2ehWZ4jARGmpX6vHMs5k?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
-<div class="restaurant">
+<div class="restaurant" id="Park">
 <div class="restaurant-content">
 <h2>Siam Square Park</h2>
 <p><strong>⭐ Rating:</strong> <span class="rating">4.2</span> (245 reviews)</p>
@@ -1439,7 +1525,7 @@
 <p><strong>🏆 Labels:</strong> Park</p>
 </div>
 <a class_="map-button-animated" href="https://www.google.com/maps/place/Lumphini+Park+Bandstand/data=!4m7!3m6!1s0x30e29f26326320e1:0xf92c8c730337d1cb!8m2!3d13.7311342!4d100.5415864!16s%2Fg%2F11cm3h_jbd!19sChIJ4SBjMiaf4jARy9E3A3OMLPk?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
-<div class="restaurant">
+<div class="restaurant" id="Tourist-Attraction">
 <div class="restaurant-content">
 <h2>Bangkok Hangover Tour</h2>
 <p><strong>⭐ Rating:</strong> <span class="rating">4.1</span> (41 reviews)</p>
@@ -1519,7 +1605,7 @@
 <p><strong>🏆 Labels:</strong> Tourist Attraction</p>
 </div>
 <a class_="map-button-animated" href="https://www.google.com/maps/place/%E6%9F%A5%E5%8B%92%E6%8B%89%E8%8A%B1%E5%9B%AD/data=!4m7!3m6!1s0x30e29eccec4b757d:0x11f261335251c789!8m2!3d13.7500569!4d100.5316902!16s%2Fg%2F11b_3b4q0d!19sChIJfXVL7Mye4jARicdRUjNh8hE?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
-<div class="restaurant">
+<div class="restaurant" id="Shopping-Center" >
 <div class="restaurant-content">
 <h2>CentralWorld</h2>
 <p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (67660 reviews)</p>
@@ -1779,7 +1865,7 @@
 <p><strong>🏆 Labels:</strong> Shopping Center</p>
 </div>
 <a class_="map-button-animated" href="https://www.google.com/maps/place/The+Portico+Langsuan/data=!4m7!3m6!1s0x30e29edbac590b3f:0x3899519e4717dac2!8m2!3d13.742175!4d100.543867!16s%2Fg%2F11ck6px_q2!19sChIJPwtZrNue4jARwtoXR55RmTg?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
-<div class="restaurant">
+<div class="restaurant" id="local-Market">
 <div class="restaurant-content">
 <h2>At One Market</h2>
 <p><strong>⭐ Rating:</strong> <span class="rating">4.2</span> (128 reviews)</p>
@@ -1969,7 +2055,7 @@
 <p><strong>🏆 Labels:</strong> Local Market</p>
 </div>
 <a class_="map-button-animated" href="https://www.google.com/maps/place/%E6%9F%A5%E5%BE%B7%E5%A4%9C%E5%B8%82/data=!4m7!3m6!1s0x30e29fb274407d93:0x2aba451897c0b5f!8m2!3d13.7565029!4d100.5669228!16s%2Fg%2F11s0cx585k!19sChIJk31AdLKf4jARXwt8iVGkqwI?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
-<div class="restaurant">
+<div class="restaurant" id="Pub-Lover">
 <div class="restaurant-content">
 <h2>Vesper</h2>
 <p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (1002 reviews)</p>
@@ -2219,7 +2305,7 @@
 <p><strong>🏆 Labels:</strong> Pub-Lover</p>
 </div>
 <a class_="map-button-animated" href="https://www.google.com/maps/place/The+Roof+Top+Bar/data=!4m7!3m6!1s0x30e29ec87dae7525:0x725ac764fdc8c7fe!8m2!3d13.754576!4d100.540302!16s%2Fg%2F1hc3j67pf!19sChIJJXWufcie4jAR_sfI_WTHWnI?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
-<div class="restaurant">
+<div class="restaurant" id="Coffee-Lover">
 <div class="restaurant-content">
 <h2>Factory Coffee &amp; Brew Bar</h2>
 <p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (3108 reviews)</p>
@@ -2269,7 +2355,7 @@
 <p><strong>🏆 Labels:</strong> Coffee-Lover</p>
 </div>
 <a class_="map-button-animated" href="https://www.google.com/maps/place/Artis+Coffee+Bangkok/data=!4m7!3m6!1s0x30e29ee2cf73e98f:0x1f200049c0f05910!8m2!3d13.7351277!4d100.5627024!16s%2Fg%2F11b7q98kzf!19sChIJj-lzz-Ke4jAREFnwwEkAIB8?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
-<div class="restaurant">
+<div class="restaurant" id="Spa-Relaxation">
 <div class="restaurant-content">
 <h2>BHAWA SPA on the eight</h2>
 <p><strong>⭐ Rating:</strong> <span class="rating">4.6</span> (874 reviews)</p>
