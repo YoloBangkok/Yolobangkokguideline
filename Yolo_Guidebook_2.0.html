@@ -1,0 +1,2437 @@
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Yolo Guidebook</title>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            
+    background: linear-gradient(-45deg, rgb(90, 128, 78), rgb(90, 128, 78, 0.8), rgb(90, 128, 78, 0.6), rgb(90, 128, 78, 0.4));
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    
+            color: rgb(53, 85, 46);
+        }
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 3px solid #007BFF;
+            
+    background: linear-gradient(90deg, rgb(38, 67, 42), rgb(38, 67, 42, 0.8));
+    
+            color: white;
+            border-radius: 10px 10px 0 0;
+            animation: slideDown 1s ease-in-out;
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+        .restaurant {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: slideIn 0.8s ease-in-out;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .restaurant:hover {
+            transform: scale(1.03) rotate(1deg);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        .restaurant h2 {
+            margin: 0 0 5px;
+            font-size: 18px;
+            color: rgb(53, 85, 46);
+            animation: colorChange 2s infinite alternate;
+        }
+        @keyframes colorChange {
+            from { color: rgb(90, 128, 78); }
+            to { color: #00BFFF; }
+        }
+        .restaurant p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #555;
+            animation: fadeInText 2s ease-in-out;
+        }
+        @keyframes fadeInText {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .restaurant .tag {
+            display: inline-block;
+            background: #eaf4ff;
+            border-radius: 12px;
+            padding: 5px 10px;
+            margin-right: 5px;
+            font-size: 12px;
+            color: rgb(90, 128, 78);
+            animation: bounceTag 1.5s infinite alternate;
+        }
+        @keyframes bounceTag {
+            from { transform: translateY(0); }
+            to { transform: translateY(-5px); }
+        }
+        .rating {
+            font-weight: bold;
+            color: #ff9900;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+            color: #888;
+            animation: fadeInFooter 1s ease-in-out;
+        }
+        @keyframes fadeInFooter {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+</style>
+<style>
+        .map-button-animated {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 12px 25px;
+            background: linear-gradient(90deg, #4caf50, #2196f3);
+            color: white;
+            border-radius: 25px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            transition: all 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+        .map-button-animated:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 300%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: skewX(-45deg);
+            transition: left 0.5s ease-out;
+        }
+        .map-button-animated:hover:before {
+            left: 100%;
+        }
+        .map-button-animated:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+        }
+        .map-button-animated:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+    </style></head>
+<body>
+<div class="container">
+<div class="header">
+<h1>Yolo Guidebook</h1>
+</div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Artur</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (288 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Steak</span></p>
+<p><strong>📍 Address:</strong> Ploenchit Road, Soi Tonson, Bliston Suwan Park View</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E4%BA%9A%E7%89%B9%E7%89%9B%E6%8E%92%E9%A6%86/data=!4m7!3m6!1s0x30e29edb9afdde8b:0x6c8362af424612cc!8m2!3d13.7418781!4d100.5453048!16s%2Fg%2F11h1cmf6f!19sChIJi979mtue4jARzBJGQq9ig2w?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Sushi Niwa Bangkok</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (199 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Sushi</span></p>
+<p><strong>📍 Address:</strong> 39/5 Soi Ruam Rudi 2</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E5%AF%BF%E5%8F%B8%E5%BA%ADSushi+Niwa+Bangkok/data=!4m7!3m6!1s0x30e29ede656860af:0x2260ff78a11cdd18!8m2!3d13.7389057!4d100.5501085!16s%2Fg%2F11g7_hq798!19sChIJr2BoZd6e4jARGN0coXj_YCI?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Yamazato</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (469 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Japanese Flavor</span></p>
+<p><strong>📍 Address:</strong> 57 Witthayu Rd</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E5%B1%B1%E9%87%8C/data=!4m7!3m6!1s0x30e29edcf33578ef:0xd77fca8b56a2b6a7!8m2!3d13.7428479!4d100.5479016!16s%2Fg%2F11b69bcrwt!19sChIJ73g189ye4jARp7aiVovKf9c?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Din Tai Fung</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.3</span> (1045 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Taiwanese Flavor</span></p>
+<p><strong>📍 Address:</strong> 546/4 5 Floor, Phloen Chit Rd</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E9%BC%8E%E6%B3%B0%E8%B1%90+%28%E5%B0%9A%E6%B3%B0%E9%A2%86%E4%BD%BF%E8%B4%AD%E7%89%A9%E4%B8%AD%E5%BF%83%E5%BA%97%29/data=!4m7!3m6!1s0x30e29edc9feb1061:0x6c67f5382f5299bf!8m2!3d13.7437469!4d100.5471496!16s%2Fg%2F11b76ksqd1!19sChIJYRDrn9ye4jARv5lSLzj1Z2w?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Wah Lok, Cantonese Restaurant</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (309 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Guangdong flavor</span></p>
+<p><strong>📍 Address:</strong> 2nd floor, Carlton Hotel Bangkok Sukhumvit 491 Sukhumvit Road Klongtoey Nua</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Wah+Lok,+Cantonese+Restaurant/data=!4m7!3m6!1s0x30e29ff721e1a577:0xf2b0851006d558cf!8m2!3d13.7345523!4d100.5643463!16s%2Fg%2F11j1fcrctk!19sChIJd6XhIfef4jARz1jVBhCFsPI?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Tonchin Ramen - Mercury Ville</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.7</span> (792 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿200-300</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Ramen</span></p>
+<p><strong>📍 Address:</strong> 1st FL, Mercury Ville</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Tonchin+Ramen+-+Mercury+Ville/data=!4m7!3m6!1s0x30e29f2f16ad3225:0x7ad6760ae794814c!8m2!3d13.7435796!4d100.544118!16s%2Fg%2F11htv4j8lp!19sChIJJTKtFi-f4jARTIGU5wp21no?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>The Local</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (2604 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Thai flavor</span></p>
+<p><strong>📍 Address:</strong> 32 32/1 Soi Sukhumvit 23</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/The+Local/data=!4m7!3m6!1s0x30e29efb3535cf73:0x913c6ad6b30887b0!8m2!3d13.7406407!4d100.5636026!16s%2Fg%2F11cfcdr5c!19sChIJc881Nfue4jARsIcIs9ZqPJE?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Thai Niyom Cuisine</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.2</span> (737 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Thai flavor</span></p>
+<p><strong>📍 Address:</strong> 888/28-29 Mahatun Plaza, Ploenchit Road</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Thai+Niyom+Cuisine/data=!4m7!3m6!1s0x30e29edc5309713b:0x9a860b3cdbbced54!8m2!3d13.741911!4d100.549135!16s%2Fg%2F11f31xw_bt!19sChIJO3EJU9ye4jARVO282zwLhpo?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Sri Trat Restaurant and Bar</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (1939 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Thai flavor</span></p>
+<p><strong>📍 Address:</strong> 90 Sukhumvit 33 Alley</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Sri+Trat+Restaurant+and+Bar/data=!4m7!3m6!1s0x30e29efc3bbbcfa1:0x1ae0f08f959b616b!8m2!3d13.7368037!4d100.5680964!16s%2Fg%2F11c2n_wlzx!19sChIJoc-7O_ye4jARa2GblY_w4Bo?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Sorn</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.7</span> (372 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Luxury Collection Flavor</span></p>
+<p><strong>📍 Address:</strong> 56 Soi Sukhumvit 26</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Sorn/data=!4m7!3m6!1s0x30e29f05dd09f659:0xc0ee0ab9bfd7eaf5!8m2!3d13.7231343!4d100.5684649!16s%2Fg%2F11ggn2dwvn!19sChIJWfYJ3QWf4jAR9erXv7kK7sA?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Saneh Jaan</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (655 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Thai flavor</span></p>
+<p><strong>📍 Address:</strong> 130-132 Witthayu Rd</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Saneh+Jaan/data=!4m7!3m6!1s0x30e29ed8ce3d6251:0xaa59932c8c873865!8m2!3d13.7354963!4d100.5459318!16s%2Fg%2F11c44f4nwp!19sChIJUWI9ztie4jARZTiHjCyTWao?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Rossini's</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (210 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Italian flavor flavor</span></p>
+<p><strong>📍 Address:</strong> 250 Sukhumvit Rd</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Rossini%27s/data=!4m7!3m6!1s0x30e29ee3b886aa89:0xbeaad131101343f!8m2!3d13.737277!4d100.5590826!16s%2Fg%2F1th194l4!19sChIJiaqGuOOe4jARPzQBEROt6gs?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>R-HAAN</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.2</span> (692 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Thai flavor</span></p>
+<p><strong>📍 Address:</strong> 131 ซอย ทองหล่อ 9</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/R-HAAN/data=!4m7!3m6!1s0x30e29fab5a8cd9f9:0x1d16d2b8c5533110!8m2!3d13.7318321!4d100.5795655!16s%2Fg%2F11gglt712q!19sChIJ-dmMWquf4jAREDFTxbjSFh0?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Restaurant Resonance</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.8</span> (137 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Luxury Collection Flavor</span></p>
+<p><strong>📍 Address:</strong> 108, 4 Sukhumvit 65</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Restaurant+Resonance/data=!4m7!3m6!1s0x30e29fc93c539175:0xb393f7fc2d9cb856!8m2!3d13.7213667!4d100.5919884!16s%2Fg%2F11p5thqtfr!19sChIJdZFTPMmf4jARVricLfz3k7M?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Restaurant Coda Bangkok</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.6</span> (186 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Luxury Collection Flavor</span></p>
+<p><strong>📍 Address:</strong> 130, 132 Witthayu Rd</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Restaurant+Coda+Bangkok/data=!4m7!3m6!1s0x30e29f572f46cdaf:0xbe226ef9f2901520!8m2!3d13.7357972!4d100.5456925!16s%2Fg%2F11rk8zm_cn!19sChIJr81GL1ef4jARIBWQ8vluIr4?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Punjab Grill</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (980 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Indian flavor</span></p>
+<p><strong>📍 Address:</strong> 23/2-3 Soi Sukhumvit 13</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Punjab+Grill/data=!4m7!3m6!1s0x30e29ee674dd62ef:0x9c0c5fd821231d45!8m2!3d13.744005!4d100.5578306!16s%2Fg%2F11bz0ly5sg!19sChIJ72LddOae4jARRR0jIdhfDJw?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Nonna Nella by Lenzi</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (506 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Italian flavor flavor</span></p>
+<p><strong>📍 Address:</strong> 83, ออล ซีซั่นส์ เพลส, 20 Witthayu Rd</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Nonna+Nella+by+Lenzi/data=!4m7!3m6!1s0x30e29f31b160e963:0x6260c3540a1380!8m2!3d13.7396731!4d100.5479487!16s%2Fg%2F11ghpstqxn!19sChIJY-lgsTGf4jARgBMKVMNgYgA?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Nan Bei Restaurant</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.6</span> (209 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Chinese Flavor</span></p>
+<p><strong>📍 Address:</strong> 1041, 38 Phloen Chit Rd</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Nan+Bei+%E9%A4%90%E9%A6%86/data=!4m7!3m6!1s0x30e29f8330f08a37:0x5bca216b6803307e!8m2!3d13.7434122!4d100.5489501!16s%2Fg%2F11hzpnwczj!19sChIJN4rwMIOf4jARfjADaGshyls?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Ms. Maria &amp; Mr. Singh</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (493 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Restaurant</span></p>
+<p><strong>📍 Address:</strong> 68/2 Soi Sukhumvit 31</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Ms.+Maria+%26+Mr.+Singh/data=!4m7!3m6!1s0x30e29f7f07310fdd:0xec3a567046a2db29!8m2!3d13.7407513!4d100.5676584!16s%2Fg%2F11fsmlj0p4!19sChIJ3Q8xB3-f4jARKduiRnBWOuw?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>MIA Bangkok</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.7</span> (402 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Modern European flavor</span></p>
+<p><strong>📍 Address:</strong> 30 Attha Kawi 1 Alley</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/MIA+Bangkok/data=!4m7!3m6!1s0x30e29f25dec7bc4d:0x9f4dc662e011fc75!8m2!3d13.7213487!4d100.5712787!16s%2Fg%2F11fm6gnf7n!19sChIJTbzH3iWf4jARdfwR4GLGTZ8?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Mezzaluna</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (273 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Luxury Collection Flavor</span></p>
+<p><strong>📍 Address:</strong> 65th Floor State Tower Bangkok 1055 Si Lom Rd</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Mezzaluna/data=!4m7!3m6!1s0x30e298c56ea87b99:0x5bdb9505272d7173!8m2!3d13.7219248!4d100.5170156!16s%2Fg%2F1v_v_tvh!19sChIJmXuobsWY4jARc3EtJwWV21s?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Lenzi Tuscan Kitchen</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.7</span> (903 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Italian flavor flavor</span></p>
+<p><strong>📍 Address:</strong> 69/1-2 Ruamruedee 2 Witthayu Rd</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Lenzi+Tuscan+Kitchen/data=!4m7!3m6!1s0x30e29f22ee30e6a5:0xc0cd4403088c85b9!8m2!3d13.7378589!4d100.5507867!16s%2Fg%2F11b6hmml14!19sChIJpeYw7iKf4jARuYWMCANEzcA?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>lay lao - Ari</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (1828 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Thai flavor</span></p>
+<p><strong>📍 Address:</strong> 65 Phahon Yothin 7</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/lay+lao+-+Ari/data=!4m7!3m6!1s0x30e29c1da70480e3:0x21df567d78ca664!8m2!3d13.7817476!4d100.5437851!16s%2Fg%2F11b7gmtffx!19sChIJ44AEpx2c4jARZKaM12f1HQI?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>KHAAN Thai Fine Dining Restaurant Bangkok</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.8</span> (216 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Restaurant</span></p>
+<p><strong>📍 Address:</strong> 14 3 Soi Somkid</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/KHAAN+Thai+Fine+Dining+Restaurant+Bangkok/data=!4m7!3m6!1s0x30e29f8a6807af9b:0x28b7600173e87284!8m2!3d13.7471057!4d100.546021!16s%2Fg%2F11v5vzf1cb!19sChIJm68HaIqf4jARhHLocwFgtyg?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Kam's Roast Bangkok Central World</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.2</span> (1182 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Chinese Flavor</span></p>
+<p><strong>📍 Address:</strong> 7th Floor, เลขที่ 4, 4/1-4 ซ. วิภาวดี 2 แยก 4-4</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Kam%27s+Roast+Bangkok+Central+World/data=!4m7!3m6!1s0x30e29f16e9d6cc03:0xd1c0b0a56507b67!8m2!3d13.74681!4d100.5396269!16s%2Fg%2F11m_zfhthz!19sChIJA8zW6Raf4jARZ3tQVgoLHA0?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>J'AIME by Jean-Michel Lorain at U Sathorn</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.6</span> (548 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Modern French Flavor</span></p>
+<p><strong>📍 Address:</strong> U Sathorn Bangkok 105/1 Ngam Duphli Alley</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/J%27AIME+by+Jean-Michel+Lorain+at+U+Sathorn/data=!4m7!3m6!1s0x30e29f3b8af52475:0x8820663ab81a5170!8m2!3d13.7182888!4d100.5459681!16s%2Fg%2F11b66fv2dj!19sChIJdST1ijuf4jARcFEauDpmIIg?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>INDDEE</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.9</span> (197 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Restaurant</span></p>
+<p><strong>📍 Address:</strong> 68, 1 Soi Langsuan</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/INDDEE/data=!4m7!3m6!1s0x30e29fa1dfc4e191:0xe8eb0387503486c1!8m2!3d13.7376827!4d100.542291!16s%2Fg%2F11s7wbq02x!19sChIJkeHE36Gf4jARwYY0UIcD6-g?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Haoma Bangkok</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.6</span> (402 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Luxury Collection Flavor</span></p>
+<p><strong>📍 Address:</strong> 231, 3 Soi Sukhumvit 31</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Haoma+Bangkok/data=!4m7!3m6!1s0x30e29efa3fe4cdf1:0x20ca9b2b4f1d0f8e!8m2!3d13.7430038!4d100.5676651!16s%2Fg%2F11gbk464s3!19sChIJ8c3kP_qe4jARjg8dTyubyiA?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Gaggan</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (372 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Luxury Collection Flavor</span></p>
+<p><strong>📍 Address:</strong> 68 Sukhumvit 31</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Gaggan/data=!4m7!3m6!1s0x30e29fff71c7f98b:0x82c0f47139958e00!8m2!3d13.7407839!4d100.5675867!16s%2Fg%2F11hdvt6x30!19sChIJi_nHcf-f4jARAI6VOXH0wII?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Elements, Inspired by Ciel Bleu</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (180 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">European Style Western Restaurant</span></p>
+<p><strong>📍 Address:</strong> 57 Witthayu Rd</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Elements,+Inspired+by+Ciel+Bleu/data=!4m7!3m6!1s0x30e29edeb228e9e7:0x2e299ac04828adbb!8m2!3d13.742838!4d100.547793!16s%2Fg%2F1q6n2_s9v!19sChIJ5-kost6e4jARu60oSMCaKS4?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Chef Man (Wireless Road)</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (106 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Chinese Flavor</span></p>
+<p><strong>📍 Address:</strong> 2/4 อาคารบีดีเอ็มเอส เวลเนส คลินิก ห้องเลขที่ 22-44 ชั้น จี Witthayu Rd</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Chef+Man+%28Wireless+Road%29/data=!4m7!3m6!1s0x30e29f8bb8cb8af9:0x52be2955653c34f2!8m2!3d13.7472019!4d100.5479417!16s%2Fg%2F11mtr7pvnw!19sChIJ-YrLuIuf4jAR8jQ8ZVUpvlI?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Bangkok Bold Kitchen at Central Embassy</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.3</span> (279 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Thai flavor</span></p>
+<p><strong>📍 Address:</strong> 1031 Phloen Chit Rd</p>
+<p><strong>🏆 Labels:</strong> Michelin</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Bangkok+Bold+Kitchen+at+Central+Embassy/data=!4m7!3m6!1s0x30e29fa8177a2d69:0x16bcfc9d43c6d059!8m2!3d13.7441064!4d100.546082!16s%2Fg%2F11b88h4lyq!19sChIJaS16F6if4jARWdDGQ538vBY?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>ฟ้าปลาทาน เซ็นทรัล ชิดลม Fá Plā Tahń Central Childlom</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.1</span> (128 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Restaurant</span></p>
+<p><strong>📍 Address:</strong> 1 FL, Central Chidlom Tower</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E0%B8%9F%E0%B9%89%E0%B8%B2%E0%B8%9B%E0%B8%A5%E0%B8%B2%E0%B8%97%E0%B8%B2%E0%B8%99+%E0%B9%80%E0%B8%8B%E0%B9%87%E0%B8%99%E0%B8%97%E0%B8%A3%E0%B8%B1%E0%B8%A5+%E0%B8%8A%E0%B8%B4%E0%B8%94%E0%B8%A5%E0%B8%A1+F%C3%A1+Pl%C4%81+Tah%C5%84+Central+Childlom/data=!4m7!3m6!1s0x30e29f98bdca9637:0x8195b2ef7f08dba3!8m2!3d13.744735!4d100.5445384!16s%2Fg%2F11k43j0_n2!19sChIJN5bKvZif4jARo9sIf--ylYE?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>โค ลิมิเต็ด สยามพารากอน ชั้น G - CO LIMITED Siam Paragon G Floor</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.7</span> (448 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Thai flavor</span></p>
+<p><strong>📍 Address:</strong> G Fl., Gourmet Garden Zone, Siam Paragon, 241 Rama I Rd</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E0%B9%82%E0%B8%84+%E0%B8%A5%E0%B8%B4%E0%B8%A1%E0%B8%B4%E0%B9%80%E0%B8%95%E0%B9%87%E0%B8%94+%E0%B8%AA%E0%B8%A2%E0%B8%B2%E0%B8%A1%E0%B8%9E%E0%B8%B2%E0%B8%A3%E0%B8%B2%E0%B8%81%E0%B8%AD%E0%B8%99+%E0%B8%8A%E0%B8%B1%E0%B9%89%E0%B8%99+G+-+CO+LIMITED+Siam+Paragon+G+Floor/data=!4m7!3m6!1s0x30e29f200743a787:0x32bc6de5cb19b5a3!8m2!3d13.747322!4d100.5343198!16s%2Fg%2F11q3zf8w8z!19sChIJh6dDByCf4jARo7UZy-VtvDI?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>เฮียด่วน Hereduan - Thai Street food</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.8</span> (544 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Restaurant</span></p>
+<p><strong>📍 Address:</strong> 32 ซ. เอกมัย 21</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E0%B9%80%E0%B8%AE%E0%B8%B5%E0%B8%A2%E0%B8%94%E0%B9%88%E0%B8%A7%E0%B8%99+Hereduan+-+%E6%AE%B5%E5%93%A5+Thai+Street+food/data=!4m7!3m6!1s0x30e29f322e69f0ab:0xd5f06c2dd7958a0e!8m2!3d13.7385006!4d100.5883226!16s%2Fg%2F11j5stkn66!19sChIJq_BpLjKf4jARDoqV1y1s8NU?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>เจ๊เฮียง อาหารตามสั่ง เยาวราช Hiang A-la-carte Street Food</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.3</span> (116 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Restaurant</span></p>
+<p><strong>📍 Address:</strong> 418 Yaowarat Rd</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E0%B9%80%E0%B8%88%E0%B9%8A%E0%B9%80%E0%B8%AE%E0%B8%B5%E0%B8%A2%E0%B8%87+%E0%B8%AD%E0%B8%B2%E0%B8%AB%E0%B8%B2%E0%B8%A3%E0%B8%95%E0%B8%B2%E0%B8%A1%E0%B8%AA%E0%B8%B1%E0%B9%88%E0%B8%87+%E0%B9%80%E0%B8%A2%E0%B8%B2%E0%B8%A7%E0%B8%A3%E0%B8%B2%E0%B8%8A+Hiang+A-la-carte+Street+Food/data=!4m7!3m6!1s0x30e29900a5f32449:0x5c26f71691845f4e!8m2!3d13.7404854!4d100.5093666!16s%2Fg%2F11h07vcq6v!19sChIJSSTzpQCZ4jARTl-EkRb3Jlw?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>You&amp;Mee</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (183 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Thai flavor</span></p>
+<p><strong>📍 Address:</strong> Grand Hyatt Erawan Bangkok LL Floor 494 Rajdamri Road</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/You%26Mee/data=!4m7!3m6!1s0x30e29ed07061cf2d:0xe8ee57a0ae21f0d5!8m2!3d13.7437316!4d100.5406495!16s%2Fg%2F1hm3y8twr!19sChIJLc9hcNCe4jAR1fAhrqBX7ug?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Thailicious Thai Restaurant</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.6</span> (194 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Restaurant</span></p>
+<p><strong>📍 Address:</strong> 120/9-10 Ratchaprarop Rd</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Thailicious+Thai+Restaurant/data=!4m7!3m6!1s0x30e29f7156036667:0x6da6007b7864e8e5!8m2!3d13.7540908!4d100.5418637!16s%2Fg%2F11vt40fm51!19sChIJZ2YDVnGf4jAR5ehkeHsApm0?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Tasty Congee &amp; Noodle Wantun Shop @ Siam Paragon</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.2</span> (415 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Chinese Flavor</span></p>
+<p><strong>📍 Address:</strong> Shop No. G21, G Floor, Siam Paragon, 991 Rama I Rd</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Tasty+Congee+%26+Noodle+Wantun+Shop+@+Siam+Paragon/data=!4m7!3m6!1s0x30e29f70505da187:0x464fcea5d103b5aa!8m2!3d13.7478406!4d100.5349472!16s%2Fg%2F11mts6vh0y!19sChIJh6FdUHCf4jARqrUD0aXOT0Y?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Spice Market</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.3</span> (133 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Thai flavor</span></p>
+<p><strong>📍 Address:</strong> Anantara Siam Bangkok 155 Ratchadamri Rd</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Spice+Market/data=!4m7!3m6!1s0x30e29ed0bcb22ab5:0xff0a4030f6bf4465!8m2!3d13.7409396!4d100.5403839!16s%2Fg%2F1tf8wf2k!19sChIJtSqyvNCe4jARZUS_9jBACv8?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Seafood Paradise</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.3</span> (108 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Seafood</span></p>
+<p><strong>📍 Address:</strong> อาคารจีเอ็มเอ็ม แกรมมี่ เพลส 50 ถนนอโศกมนตรี (สุขุมวิท 21 B1</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Seafood+Paradise/data=!4m7!3m6!1s0x30e29ff97e4bf281:0xc15b2c4174988d15!8m2!3d13.7434926!4d100.5624531!16s%2Fg%2F11fpg5rgv_!19sChIJgfJLfvmf4jARFY2YdEEsW8E?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Ros'niyom Central World</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.0</span> (239 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Thai flavor</span></p>
+<p><strong>📍 Address:</strong> L6, Central World, 99/9 Rama I Rd</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Ros%27niyom+Central+World/data=!4m7!3m6!1s0x30e29f0c59cfb319:0xdd4d5b76a9bd0349!8m2!3d13.7469763!4d100.539229!16s%2Fg%2F11f8mgthld!19sChIJGbPPWQyf4jARSQO9qXZbTd0?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Rosniyom Baan Kampu Asoke</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.2</span> (193 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Thai flavor</span></p>
+<p><strong>📍 Address:</strong> 68 Sukhumvit 21 Rd</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Rosniyom+Baan+Kampu+Asoke/data=!4m7!3m6!1s0x30e29fae57cb7d67:0x902852a9d4adbaa1!8m2!3d13.7459782!4d100.5629059!16s%2Fg%2F11gycvtw3c!19sChIJZ33LV66f4jARobqt1KlSKJA?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Rife</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.1</span> (132 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿100-300</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Restaurant</span></p>
+<p><strong>📍 Address:</strong> 327/12 Soi Phaya Nak</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Rife/data=!4m7!3m6!1s0x30e29933555a1103:0xae8ce5c1b2e1d6cd!8m2!3d13.7518387!4d100.5295549!16s%2Fg%2F11c6kvvc3t!19sChIJAxFaVTOZ4jARzdbhssHljK4?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Pratunam Hainanese Chicken Rice (Go Ang) @Platinum Food Court</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.1</span> (162 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1-100</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Restaurant</span></p>
+<p><strong>📍 Address:</strong> Phetchaburi Rd</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Pratunam+Hainanese+Chicken+Rice+%28Go+Ang%29+@Platinum+Food+Court/data=!4m7!3m6!1s0x30e29ecf3c744587:0x1cf4cc2071bd785f!8m2!3d13.7503059!4d100.5390396!16s%2Fg%2F11bxf34jpw!19sChIJh0V0PM-e4jARX3i9cSDM9Bw?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Pier 21</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (22532 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1-100</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Food Court</span></p>
+<p><strong>📍 Address:</strong> ชั้น 5 88 Sukhumvit Rd</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Pier+21/data=!4m7!3m6!1s0x30e29ee39e563b0b:0x33ce8f75edc2c9c5!8m2!3d13.737625!4d100.5606201!16s%2Fg%2F11c3286pb5!19sChIJCztWnuOe4jARxcnC7XWPzjM?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Petchaburi Soi 5 Food Street</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.2</span> (174 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿100-200</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Hawker Stall</span></p>
+<p><strong>📍 Address:</strong> 60 Soi Phetchaburi 5</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Petchaburi+Soi+5+Food+Street/data=!4m7!3m6!1s0x30e299cba597d79b:0xc64afb1e86c61b3b!8m2!3d13.755659!4d100.5287756!16s%2Fg%2F11f6yfk3pw!19sChIJm9eXpcuZ4jAROxvGhh77SsY?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Moom Muum Park Soi 11</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.8</span> (1389 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Thai flavor</span></p>
+<p><strong>📍 Address:</strong> 20 Soi Sukhumvit 11</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Moom+Muum+Park+Soi+11/data=!4m7!3m6!1s0x30e29f37997031d7:0x4605036182605c85!8m2!3d13.7434712!4d100.5567527!16s%2Fg%2F11scrc2z4r!19sChIJ1zFwmTef4jARhVxggmEDBUY?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>MHAN Siam Center - หมาน Asian Street Food</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.7</span> (326 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿200-300</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Restaurant</span></p>
+<p><strong>📍 Address:</strong> 989 Siam Centre ชั้น 2 Rama I Rd</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/MHAN+Siam+Center+-+%E0%B8%AB%E0%B8%A1%E0%B8%B2%E0%B8%99+Asian+Street+Food/data=!4m7!3m6!1s0x30e29d63d0a12f35:0xd911c412f58459b9!8m2!3d13.7462755!4d100.5326789!16s%2Fg%2F11p12n8_zv!19sChIJNS-h0GOd4jARuVmE9RLEEdk?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Madras Darbar Indian Restaurant</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.8</span> (4372 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Indian flavor</span></p>
+<p><strong>📍 Address:</strong> 120/35-36 Ratchaprarop Rd</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Madras+Darbar+Indian+Restaurant/data=!4m7!3m6!1s0x30e29ec881b53b33:0xbac15a9736208f82!8m2!3d13.7540647!4d100.5409921!16s%2Fg%2F11f5h37965!19sChIJMzu1gcie4jARgo8gNpdawbo?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>KubKao' KubPla</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.3</span> (465 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Thai flavor</span></p>
+<p><strong>📍 Address:</strong> Phloen Chit Rd</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/KubKao%27+KubPla/data=!4m7!3m6!1s0x30e29edb5e540795:0x863ff2b0b05a9b85!8m2!3d13.743969!4d100.5461391!16s%2Fg%2F11f15mnm7j!19sChIJlQdUXtue4jARhZtasLDyP4Y?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Kuay Teow Khae -Street Noodle Soup</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (346 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1-100</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Noodles</span></p>
+<p><strong>📍 Address:</strong> PGGM+MFJ, Convent Rd</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Kuay+Teow+Khae+-Street+Noodle+Soup/data=!4m7!3m6!1s0x30e29f2c47dadb0b:0x2dacd9b8cc3fab4a!8m2!3d13.7267216!4d100.5336449!16s%2Fg%2F11bxf4g656!19sChIJC9vaRyyf4jARSqs_zLjZrC0?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Krua Khun Puk</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.3</span> (2531 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿100-200</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Thai flavor</span></p>
+<p><strong>📍 Address:</strong> 155 Sukhumvit 11/1 Alley</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Krua+Khun+Puk/data=!4m7!3m6!1s0x30e29f7acbd74e2f:0xa5e92b66b13296be!8m2!3d13.7399472!4d100.5565601!16s%2Fg%2F11fjnbg8bj!19sChIJL07Xy3qf4jARvpYysWYr6aU?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Jasmine Siam Kitchen จัสมิน สยาม คิทเช่น</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.7</span> (716 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Thai flavor</span></p>
+<p><strong>📍 Address:</strong> 497, 14-15 Phetchaburi Rd</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Jasmine+Siam+Kitchen+%E0%B8%88%E0%B8%B1%E0%B8%AA%E0%B8%A1%E0%B8%B4%E0%B8%99+%E0%B8%AA%E0%B8%A2%E0%B8%B2%E0%B8%A1+%E0%B8%84%E0%B8%B4%E0%B8%97%E0%B9%80%E0%B8%8A%E0%B9%88%E0%B8%99/data=!4m7!3m6!1s0x30e29fd4d84a14d5:0xb5c62c18a313807c!8m2!3d13.7538362!4d100.5306057!16s%2Fg%2F11j1pztsgf!19sChIJ1RRK2NSf4jARfIAToxgsxrU?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Jan Kha Hmoo</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (171 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1-100</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Hawker Stall</span></p>
+<p><strong>📍 Address:</strong> 39 Soi Phetchaburi 19</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Jan+Kha+Hmoo/data=!4m7!3m6!1s0x30e29f5aa9e22e1f:0x5df3db5e1858ed1b!8m2!3d13.7524307!4d100.538724!16s%2Fg%2F11rzrhd26d!19sChIJHy7iqVqf4jARG-1YGF7b810?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>House of Food บรรทัดทอง</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.9</span> (496 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿100-200</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Restaurant</span></p>
+<p><strong>📍 Address:</strong> 1507 ถนน บรรทัดทอง</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/House+of+Food+%E0%B8%9A%E0%B8%A3%E0%B8%A3%E0%B8%97%E0%B8%B1%E0%B8%94%E0%B8%97%E0%B8%AD%E0%B8%87/data=!4m7!3m6!1s0x30e299575da488cf:0xb9b6fe85de78a2b1!8m2!3d13.7415621!4d100.5227889!16s%2Fg%2F11w4wm0ql7!19sChIJz4ikXVeZ4jARsaJ43oX-trk?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Holey Artisan Bakery</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (1292 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Coffee shop</span></p>
+<p><strong>📍 Address:</strong> 245 12 Soi Sukhumvit 31</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Holey+Artisan+Bakery/data=!4m7!3m6!1s0x30e29efc6388c04d:0xb82acfae8399e4f4!8m2!3d13.7378682!4d100.5664816!16s%2Fg%2F11bxj8h0yb!19sChIJTcCIY_ye4jAR9OSZg67PKrg?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Here Duan (Banthat Thong)</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.9</span> (882 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿200-300</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Thai flavor</span></p>
+<p><strong>📍 Address:</strong> 1982,1984</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Here+Duan+%28Banthat+Thong%29/data=!4m7!3m6!1s0x30e29f92e7dd15e5:0x748f1d2f6a2f186!8m2!3d13.7372013!4d100.5217804!16s%2Fg%2F11vqhqlyt2!19sChIJ5RXd55Kf4jARhvGi9tLxSAc?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Haveli indian Restaurant (Bangkok)</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.9</span> (389 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Indian flavor</span></p>
+<p><strong>📍 Address:</strong> 63 Soi Sukhumvit 11</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Haveli+indian+Restaurant+%28Bangkok%29/data=!4m7!3m6!1s0x30e29ff84cf33983:0x2e5217565973d124!8m2!3d13.7478902!4d100.5559316!16s%2Fg%2F11y4d3q7fn!19sChIJgznzTPif4jARJNFzWVYXUi4?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Gourmet Eats Paragon</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (2519 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿100-200</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Food Court</span></p>
+<p><strong>📍 Address:</strong> 991 Rama I Rd</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Gourmet+Eats+Paragon/data=!4m7!3m6!1s0x30e29ecdf83a7f99:0x4b50df2ec8b53b0c!8m2!3d13.7460042!4d100.5353961!16s%2Fg%2F1hf0vzdjk!19sChIJmX86-M2e4jARDDu1yC7fUEs?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Food + Plus</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (195 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1-100</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Thai flavor</span></p>
+<p><strong>📍 Address:</strong> 392/43 Rama I Rd</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Food+%2B+Plus/data=!4m7!3m6!1s0x30e29ed20ffbecf5:0x3fb472880bae6031!8m2!3d13.7451008!4d100.5350424!16s%2Fg%2F11bwrn7t85!19sChIJ9ez7D9Ke4jARMWCuC4hytD8?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Fatt Chicken Rice</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (126 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Asian Flavor</span></p>
+<p><strong>📍 Address:</strong> 99, 9 3Fl, Rama I Rd</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Fatt+Chicken+Rice/data=!4m7!3m6!1s0x30e29fd293886c25:0xedec4119bb9f4b8d!8m2!3d13.746663!4d100.5398811!16s%2Fg%2F11sbdwgzgc!19sChIJJWyIk9Kf4jARjUufuxlB7O0?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>DHAMAKA Indian Restaurant ร้านอาหารดามากะ</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.9</span> (1042 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Indian flavor</span></p>
+<p><strong>📍 Address:</strong> Dhamaka​ restaurant, 1091, 330 New Petchaburi Rd</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/DHAMAKA+Indian+Restaurant+%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%AD%E0%B8%B2%E0%B8%AB%E0%B8%B2%E0%B8%A3%E0%B8%94%E0%B8%B2%E0%B8%A1%E0%B8%B2%E0%B8%81%E0%B8%B0/data=!4m7!3m6!1s0x30e29f0584ba624d:0xccffaac623216add!8m2!3d13.7525434!4d100.5464698!16s%2Fg%2F11s8mq83_2!19sChIJTWK6hAWf4jAR3WohI8aq_8w?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Chowpati Indian Street Food - Indian Restaurant Bangkok</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.6</span> (2111 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Indian flavor</span></p>
+<p><strong>📍 Address:</strong> 12/499 G Floor, 15 Sukhumvit Residences, Soi Sukhumvit 13</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Chowpati+Indian+Street+Food+-+Indian+Restaurant+Bangkok/data=!4m7!3m6!1s0x30e29f8fa2d80583:0x5367888745723c68!8m2!3d13.7419567!4d100.5577534!16s%2Fg%2F11flbfyp56!19sChIJgwXYoo-f4jARaDxyRYeIZ1M?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Cholos BKK</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.6</span> (481 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Mexican Flavor</span></p>
+<p><strong>📍 Address:</strong> 89 Suk Chai Alley</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Cholos+BKK/data=!4m7!3m6!1s0x30e29ffecd8a606b:0xfe3d862c7390d8f0!8m2!3d13.7347731!4d100.5586355!16s%2Fg%2F11hg7jrlmx!19sChIJa2CKzf6f4jAR8NiQcyyGPf4?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Cheaper &amp; Better Street Food</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.6</span> (829 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿100-200</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Restaurant</span></p>
+<p><strong>📍 Address:</strong> 57, 89 Soi Silom 20</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Cheaper+%26+Better+Street+Food/data=!4m7!3m6!1s0x30e298d19342692d:0x1600b9ca45a9d1a4!8m2!3d13.72507!4d100.5229338!16s%2Fg%2F11c5rt_p2c!19sChIJLWlCk9GY4jARpNGpRcq5ABY?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Beer Garden Sukhumvit Soi 7</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">3.7</span> (668 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Beer House</span></p>
+<p><strong>📍 Address:</strong> 15 Sukhumvit 7 Alley</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Beer+Garden+Sukhumvit+Soi+7/data=!4m7!3m6!1s0x30e29ee63576d463:0xdb3b32bc95b53cb1!8m2!3d13.741745!4d100.5548099!16s%2Fg%2F1thvdcp1!19sChIJY9R2Neae4jARsTy1lbwyO9s?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Bangkok'78</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.3</span> (219 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Thai flavor</span></p>
+<p><strong>📍 Address:</strong> 68 Soi Langsuan</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Bangkok%2778/data=!4m7!3m6!1s0x30e29f55ea939c8f:0xcf8eca35973a1784!8m2!3d13.7414584!4d100.5430198!16s%2Fg%2F11hw5b2dgx!19sChIJj5yT6lWf4jARhBc6lzXKjs8?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Bangkok Burger</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.3</span> (106 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿100-200</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Hamburger</span></p>
+<p><strong>📍 Address:</strong> 141 Soi Sukhumvit 11</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Bangkok+Burger/data=!4m7!3m6!1s0x30e29f64d6c999dd:0x409dea4644ace6d8!8m2!3d13.7401465!4d100.5562312!16s%2Fg%2F11s4zhxc79!19sChIJ3ZnJ1mSf4jAR2OasREbqnUA?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>AYAR House Bar &amp; Restaurant</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (120 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿100-200</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Burmese style</span></p>
+<p><strong>📍 Address:</strong> 35, 2 Ratchaprasong Road</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/AYAR+House+Bar+%26+Restaurant/data=!4m7!3m6!1s0x311d65f5115ae1bb:0x2e396c1c46a69016!8m2!3d13.7490668!4d100.5414177!16s%2Fg%2F11sby0nsxy!19sChIJu-FaEfVlHTERFpCmRhxsOS4?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Addictions by Kitch Witch</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.7</span> (129 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1-100</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Restaurant</span></p>
+<p><strong>📍 Address:</strong> 47 Srisothorn Place Soi 23 (Prasarnmitr ถนน สุขุมวิท</p>
+<p><strong>🏆 Labels:</strong> Street food</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Addictions+by+Kitch+Witch/data=!4m7!3m6!1s0x30e29f82330393f9:0xea772bf48db6546f!8m2!3d13.7407037!4d100.5632686!16s%2Fg%2F1yfdqx771!19sChIJ-ZMDM4Kf4jARb1S2jfQrd-o?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Viva Cafe Soi 8</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.3</span> (1312 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">BBQ</span></p>
+<p><strong>📍 Address:</strong> 4, 14 Soi Sukhumvit 8</p>
+<p><strong>🏆 Labels:</strong> Delicacy</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Viva+Cafe+Soi+8/data=!4m7!3m6!1s0x30e29ee6c94302e5:0xc4cf890ef2c59235!8m2!3d13.7395668!4d100.5559825!16s%2Fg%2F1ptxbb6mb!19sChIJ5QJDyeae4jARNZLF8g6Jz8Q?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Victoria By Cocotte Central World</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (375 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Restaurant</span></p>
+<p><strong>📍 Address:</strong> Central World, 1/F Atrium Zone, Ratchadamri Rd</p>
+<p><strong>🏆 Labels:</strong> Delicacy</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Victoria+By+Cocotte+Central+World/data=!4m7!3m6!1s0x30e29f99418f4a9d:0x33d8a1e72a23b7e7!8m2!3d13.7459102!4d100.5394901!16s%2Fg%2F11rkf_4l43!19sChIJnUqPQZmf4jAR57cjKueh2DM?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>The Mani Bar and Grill</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (215 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Restaurant</span></p>
+<p><strong>📍 Address:</strong> 18 Sukhumvit 4 Alley</p>
+<p><strong>🏆 Labels:</strong> Delicacy</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/The+Mani+Bar+and+Grill/data=!4m7!3m6!1s0x30e29fa46089e34f:0x8cd5fb555888b8fd!8m2!3d13.7401376!4d100.5528748!16s%2Fg%2F11mr8sjlvp!19sChIJT-OJYKSf4jAR_biIWFX71Yw?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Tandoori Flame Nana</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">3.8</span> (106 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Indian flavor</span></p>
+<p><strong>📍 Address:</strong> 20 11 Sukhumvit 4 Alley</p>
+<p><strong>🏆 Labels:</strong> Delicacy</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Tandoori+Flame+Nana/data=!4m7!3m6!1s0x30e29fc3eb07edb5:0x22443d9709839e34!8m2!3d13.7386242!4d100.5529718!16s%2Fg%2F11tfg4srvd!19sChIJte0H68Of4jARNJ6DCZc9RCI?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Tamnanthai Restaurant Nana Ploenchit</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.6</span> (1107 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Thai flavor</span></p>
+<p><strong>📍 Address:</strong> 18 Sukhumvit 4 Alley</p>
+<p><strong>🏆 Labels:</strong> Delicacy</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Tamnanthai+Restaurant+Nana+Ploenchit/data=!4m7!3m6!1s0x30e29edd9b46765f:0x2bc5f9e43ef0c5aa!8m2!3d13.7396496!4d100.5527559!16s%2Fg%2F1td78lr_!19sChIJX3ZGm92e4jARqsXwPuT5xSs?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>TAI ER</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.7</span> (648 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Chinese Flavor</span></p>
+<p><strong>📍 Address:</strong> 7 Floor 999 Phloen Chit Rd</p>
+<p><strong>🏆 Labels:</strong> Delicacy</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/TAI+ER+%E5%A4%AA%E4%BA%8C%E9%85%B8%E8%8F%9C%E9%B1%BC%EF%BC%88CENTRAL+WORLD%EF%BC%89/data=!4m7!3m6!1s0x30e29f001dda60df:0xa2eb7e1924f2cbbd!8m2!3d13.745924!4d100.539563!16s%2Fg%2F11y2bngv3l!19sChIJ32DaHQCf4jARvcvyJBl-66I?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Stock.Room</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.6</span> (133 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Restaurant</span></p>
+<p><strong>📍 Address:</strong> Kimpton Maa-Lai Bangkok, Soi Ton Son</p>
+<p><strong>🏆 Labels:</strong> Delicacy</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Stock.Room/data=!4m7!3m6!1s0x30e29faf318908cf:0xe9bc748cc7220aa0!8m2!3d13.7376812!4d100.5434511!16s%2Fg%2F11kmylcxjc!19sChIJzwiJMa-f4jARoAoix4x0vOk?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Snoop's Joint</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.9</span> (313 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Vegetarian</span></p>
+<p><strong>📍 Address:</strong> 44, 32, 31 Sukhumvit 21 Rd</p>
+<p><strong>🏆 Labels:</strong> Delicacy</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Snoop%27s+Joint/data=!4m7!3m6!1s0x30e29f4b260df6b5:0x87ed1355950a8abf!8m2!3d13.7427568!4d100.5623483!16s%2Fg%2F11thd5_wjz!19sChIJtfYNJkuf4jARv4oKlVUT7Yc?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Smizzle Burger - Central Embassy</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.6</span> (178 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿300-400</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Hamburger</span></p>
+<p><strong>📍 Address:</strong> Phloen Chit Rd</p>
+<p><strong>🏆 Labels:</strong> Delicacy</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Smizzle+Burger+-+Central+Embassy/data=!4m7!3m6!1s0x30e29fa894b345ff:0x84ccb1b25a6fc71f!8m2!3d13.7439399!4d100.5465949!16s%2Fg%2F11vd87hydb!19sChIJ_0WzlKif4jARH8dvWrKxzIQ?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Sindosegi Thailand (ซินโดเซกิ)</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (283 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Restaurant</span></p>
+<p><strong>📍 Address:</strong> Siam Square Soi 7</p>
+<p><strong>🏆 Labels:</strong> Delicacy</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Sindosegi+Thailand+%28%E0%B8%8B%E0%B8%B4%E0%B8%99%E0%B9%82%E0%B8%94%E0%B9%80%E0%B8%8B%E0%B8%81%E0%B8%B4%29/data=!4m7!3m6!1s0x30e29f4895f0d571:0xcd1290ded29e17db!8m2!3d13.7442099!4d100.5351117!16s%2Fg%2F11k3hc_j34!19sChIJcdXwlUif4jAR2xee0t6QEs0?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Moon restaurant</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.2</span> (208 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Indian flavor</span></p>
+<p><strong>📍 Address:</strong> 32 Soi Sukhumvit 11</p>
+<p><strong>🏆 Labels:</strong> Delicacy</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Moon+restaurant/data=!4m7!3m6!1s0x30e29fb6c00377a9:0xeb7a60fcbac035fe!8m2!3d13.745046!4d100.5566848!16s%2Fg%2F11tn5h0cw9!19sChIJqXcDwLaf4jAR_jXAuvxgeus?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Mickey's Diner BKK</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.1</span> (1104 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Restaurant</span></p>
+<p><strong>📍 Address:</strong> GF Floor, Amarin Plaza, Phloen Chit Rd</p>
+<p><strong>🏆 Labels:</strong> Delicacy</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Mickey%27s+Diner+BKK/data=!4m7!3m6!1s0x30e29eda4d6b5c1d:0xf0c788ca484ecb31!8m2!3d13.7438469!4d100.5411009!16s%2Fg%2F11cn7k8lnp!19sChIJHVxrTdqe4jARMctOSMqIx_A?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>La Plante Bistro &amp; Cafe</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.7</span> (157 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Restaurant</span></p>
+<p><strong>📍 Address:</strong> AVORA31, 28 Soi Sukhumvit 31</p>
+<p><strong>🏆 Labels:</strong> Delicacy</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/La+Plante+Bistro+%26+Cafe/data=!4m7!3m6!1s0x30e29f73b5f60691:0xcfed6827006b9784!8m2!3d13.7375788!4d100.5673335!16s%2Fg%2F11q8ry_fjp!19sChIJkQb2tXOf4jARhJdrACdo7c8?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Indian Spices Restaurant By Khurana Inn - Bangkok, Thailand</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.6</span> (427 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Indian flavor</span></p>
+<p><strong>📍 Address:</strong> 120/176-180 Near Baiyoke Tower 2 Pratunam, Ratchaprarop Rd</p>
+<p><strong>🏆 Labels:</strong> Delicacy</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Indian+Spices+Restaurant+By+Khurana+Inn+-+Bangkok,+Thailand/data=!4m7!3m6!1s0x30e29ff156e915fb:0x2d3eb9fa3d1e8ad5!8m2!3d13.7542442!4d100.5398061!16s%2Fg%2F11frnnm1d0!19sChIJ-xXpVvGf4jAR1YoePfq5Pi0?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Hong Teh Restaurant</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (179 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Chinese Flavor</span></p>
+<p><strong>📍 Address:</strong> Ambassador Hotel Bangkok (Sky Wing</p>
+<p><strong>🏆 Labels:</strong> Delicacy</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Hong+Teh+Restaurant/data=!4m7!3m6!1s0x30e29ee6864ef541:0x4c27a67fb9c47c16!8m2!3d13.7420107!4d100.5568763!16s%2Fg%2F1v8hywl7!19sChIJQfVOhuae4jARFnzEuX-mJ0w?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Gigi Eatery Asoke</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (600 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Italian flavor flavor</span></p>
+<p><strong>📍 Address:</strong> 28 Soi Sukhumvit 19</p>
+<p><strong>🏆 Labels:</strong> Delicacy</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Gigi+Eatery+Asoke/data=!4m7!3m6!1s0x30e29f8a268495c3:0x370b453b880f2e14!8m2!3d13.73947!4d100.5601766!16s%2Fg%2F11rq7sdzqs!19sChIJw5WEJoqf4jARFC4PiDtFCzc?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Fam Time Steak and Pasta @Siam Square</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (380 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Restaurant</span></p>
+<p><strong>📍 Address:</strong> 424 Siam Square Soi 7</p>
+<p><strong>🏆 Labels:</strong> Delicacy</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Fam+Time+Steak+and+Pasta+@Siam+Square/data=!4m7!3m6!1s0x30e29f900bac77a1:0x891d62ac860b2d3c!8m2!3d13.7442344!4d100.5319951!16s%2Fg%2F11tnbhg_np!19sChIJoXesC5Cf4jARPC0LhqxiHYk?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Dum Handi Biryani - Sukhumvit 11 - Indian Restaurant</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.6</span> (860 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Indian flavor</span></p>
+<p><strong>📍 Address:</strong> 14 Sukhumvit 11/1 Alley</p>
+<p><strong>🏆 Labels:</strong> Delicacy</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Dum+Handi+Biryani+-+Sukhumvit+11+-+Indian+Restaurant/data=!4m7!3m6!1s0x30e29f846810d2e1:0x88cc9b35ed4a2f7c!8m2!3d13.7401273!4d100.5565943!16s%2Fg%2F11q9jmz0xd!19sChIJ4dIQaISf4jARfC9K7TWbzIg?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>DID - Dine in the Dark</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (175 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Luxury Collection Flavor</span></p>
+<p><strong>📍 Address:</strong> a Luxury Collection Hotel, Sheraton Grande, 250 Sukhumvit Rd</p>
+<p><strong>🏆 Labels:</strong> Delicacy</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/DID+-+Dine+in+the+Dark/data=!4m7!3m6!1s0x30e298c60b799d3d:0x4db06fbe8603ccbe!8m2!3d13.7373115!4d100.5590489!16s%2Fg%2F1hc4fc50f!19sChIJPZ15C8aY4jARvswDhr5vsE0?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Casa Lenzi Bangkok</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.7</span> (150 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Italian flavor flavor</span></p>
+<p><strong>📍 Address:</strong> 9 Phrom Si 2 Alley</p>
+<p><strong>🏆 Labels:</strong> Delicacy</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Casa+Lenzi+Bangkok/data=!4m7!3m6!1s0x30e29f7f01c06e7b:0x52a3d0699b70fa05!8m2!3d13.7375108!4d100.5739079!16s%2Fg%2F11vc0tfz_8!19sChIJe27AAX-f4jARBfpwm2nQo1I?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Breakfast Story Eleven</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.7</span> (651 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Restaurant</span></p>
+<p><strong>📍 Address:</strong> 23/2 Sukhumvit Rd</p>
+<p><strong>🏆 Labels:</strong> Delicacy</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Breakfast+Story+Eleven/data=!4m7!3m6!1s0x30e29fb4eca3f583:0x464eed9fe64d03c9!8m2!3d13.7433838!4d100.5562966!16s%2Fg%2F11jt0fk65p!19sChIJg_Wj7LSf4jARyQNN5p_tTkY?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>BABATHAI - Singapore Malaysia Restaurant</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.2</span> (285 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿200-300</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Singapore flavor</span></p>
+<p><strong>📍 Address:</strong> 45 Soi Sukhumvit 23</p>
+<p><strong>🏆 Labels:</strong> Delicacy</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/BABATHAI+-+Singapore+Malaysia+Restaurant/data=!4m7!3m6!1s0x30e29f2516237d39:0x705ad3da2c6978ae!8m2!3d13.7405331!4d100.5631905!16s%2Fg%2F11f5l9d1y_!19sChIJOX0jFiWf4jARrnhpLNrTWnA?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Arun Thai Cuisine by SEE FAH</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (231 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Thai flavor</span></p>
+<p><strong>📍 Address:</strong> ชั้น L Grande Centre Point Ratchadamri 153/2 Mahatlek Luang 1 Alley</p>
+<p><strong>🏆 Labels:</strong> Delicacy</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Arun+Thai+Cuisine+by+SEE+FAH/data=!4m7!3m6!1s0x30e29fa87a53b3f9:0x14791c0f9ab74b78!8m2!3d13.7416802!4d100.5411437!16s%2Fg%2F11pd3lx1mk!19sChIJ-bNTeqif4jAReEu3mg8ceRQ?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Al Gatto Nero</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (469 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Italian flavor flavor</span></p>
+<p><strong>📍 Address:</strong> Ocean Tower II, Sukhumvit 21 Soi 3</p>
+<p><strong>🏆 Labels:</strong> Delicacy</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Al+Gatto+Nero/data=!4m7!3m6!1s0x30e29ee519d5da15:0xf9a5742172ce7f7c!8m2!3d13.7426891!4d100.5615209!16s%2Fg%2F11cm14sz8m!19sChIJFdrVGeWe4jARfH_OciF0pfk?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Acqua Italian Fine Dining Restaurant Bangkok</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (163 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Italian flavor flavor</span></p>
+<p><strong>📍 Address:</strong> 16/18 Soi Somkid, Phloen Chit Rd</p>
+<p><strong>🏆 Labels:</strong> Delicacy</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Acqua+Italian+Fine+Dining+Restaurant+Bangkok/data=!4m7!3m6!1s0x30e29fb5715107fd:0x5184d6637b91adcb!8m2!3d13.7465792!4d100.545869!16s%2Fg%2F11lgpyr8nf!19sChIJ_QdRcbWf4jARy62Re2PWhFE?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>AB Indian Cuisine(2)</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.7</span> (142 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Indian flavor</span></p>
+<p><strong>📍 Address:</strong> 12/2 Soi Sukhumvit 23</p>
+<p><strong>🏆 Labels:</strong> Delicacy</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/AB+Indian+Cuisine%282%29/data=!4m7!3m6!1s0x30e29f1659b8e5cd:0xfd4dffed1292badd!8m2!3d13.7374709!4d100.5630032!16s%2Fg%2F11sw1b69z1!19sChIJzeW4WRaf4jAR3bqSEu3_Tf0?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>8855 Restaurant &amp; Bar</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (183 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Restaurant</span></p>
+<p><strong>📍 Address:</strong> 4, 24-25 Soi Sukhumvit 8</p>
+<p><strong>🏆 Labels:</strong> Delicacy</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/8855+Restaurant+%26+Bar/data=!4m7!3m6!1s0x30e29f48ffb108c7:0x3221a02360c50405!8m2!3d13.7394093!4d100.555725!16s%2Fg%2F11j5zxjhrx!19sChIJxwix_0if4jARBQTFYCOgITI?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>19seafood</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.7</span> (824 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Seafood Bowl</span></p>
+<p><strong>📍 Address:</strong> 645, 1 Soi Phetchaburi 13</p>
+<p><strong>🏆 Labels:</strong> Delicacy</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/19seafood/data=!4m7!3m6!1s0x30e29fea4df642f9:0x7539aa0503d3b388!8m2!3d13.752051!4d100.5355919!16s%2Fg%2F11j8jygh_h!19sChIJ-UL2Teqf4jARiLPTAwWqOXU?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Madame Tussauds BANGKOK</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (8528 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Wax Museum</span></p>
+<p><strong>📍 Address:</strong> Siam Discovery, 989 Rama I Rd</p>
+<p><strong>🏆 Labels:</strong> Museum</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Madame+Tussauds+BANGKOK/data=!4m7!3m6!1s0x30e29ecd6402071d:0x73f83d10c6a04468!8m2!3d13.746418!4d100.531671!16s%2Fg%2F11jgf48x5!19sChIJHQcCZM2e4jARaESgxhA9-HM?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Bangkok Art and Culture Centre</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (18197 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Tourist Attraction</span></p>
+<p><strong>📍 Address:</strong> 939 Rama I Rd</p>
+<p><strong>🏆 Labels:</strong> Museum</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E6%9B%BC%E8%B0%B7%E6%96%87%E5%8C%96%E8%89%BA%E6%9C%AF%E4%B8%AD%E5%BF%83/data=!4m7!3m6!1s0x30e29ecd506f6c7d:0x1ed0028ba796150b!8m2!3d13.746737!4d100.5302166!16s%2Fm%2F043rs1m!19sChIJfWxvUM2e4jARCxWWp4sC0B4?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Museum of Human Body</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.6</span> (191 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Museum</span></p>
+<p><strong>📍 Address:</strong> 34 Henri Dunant Rd</p>
+<p><strong>🏆 Labels:</strong> Museum</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E4%BA%BA%E4%BD%93%E5%8D%9A%E7%89%A9%E9%A4%A8/data=!4m7!3m6!1s0x30e29ed2339df67b:0x799a08c72fed6fe6!8m2!3d13.743486!4d100.534386!16s%2Fg%2F11bxb9nh54!19sChIJe_adM9Ke4jAR5m_tL8cImnk?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Chulalongkorn University Museum of Natural History</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (217 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Natural History Museum</span></p>
+<p><strong>📍 Address:</strong> 254 Phaya Thai Rd</p>
+<p><strong>🏆 Labels:</strong> Museum</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E6%9C%B1%E6%8B%89%E9%9A%86%E5%8A%9F%E5%A4%A7%E5%AD%A6%E8%87%AA%E7%84%B6%E5%8E%86%E5%8F%B2%E5%8D%9A%E7%89%A9%E9%A6%86/data=!4m7!3m6!1s0x30e29ed34ddfd63f:0x89a5f513c68b932!8m2!3d13.7375088!4d100.5300019!16s%2Fm%2F0w_08kr!19sChIJP9bfTdOe4jARMrloPFFfmgg?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>SAC Gallery</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (226 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Gallery</span></p>
+<p><strong>📍 Address:</strong> 160, 3 Soi Sukhumvit 39</p>
+<p><strong>🏆 Labels:</strong> Museum</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/SAC+Gallery/data=!4m7!3m6!1s0x30e29ee7e7de2713:0xca14c9897b5010f4!8m2!3d13.7396755!4d100.570113!16s%2Fg%2F1s04g8nkh!19sChIJEyfe5-ee4jAR9BBQe4nJFMo?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Jim Thompson House</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (13766 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Culutral Museum</span></p>
+<p><strong>📍 Address:</strong> 6 Kasem San 2 Alley</p>
+<p><strong>🏆 Labels:</strong> Museum</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E5%90%89%E5%A7%86+%C2%B7+%E6%B1%A4%E6%99%AE%E6%A3%AE%E5%8D%9A%E7%89%A9%E9%A6%86/data=!4m7!3m6!1s0x30e2993284fb5459:0xe984516d7ba19318!8m2!3d13.7493569!4d100.5281613!16s%2Fm%2F03hlbr1!19sChIJWVT7hDKZ4jARGJOhe21RhOk?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Nai Lert Park Heritage Home</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.6</span> (1101 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Museum</span></p>
+<p><strong>📍 Address:</strong> 4 ซอย สมคิด</p>
+<p><strong>🏆 Labels:</strong> Museum</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E5%A5%88%E4%B9%90%E5%BA%84%E5%9B%AD/data=!4m7!3m6!1s0x30e29ec35a8b8407:0xacede6d179e4e0fd!8m2!3d13.7464057!4d100.5477585!16s%2Fg%2F11bzywsr2h!19sChIJB4SLWsOe4jAR_eDkedHm7aw?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Patpong Museum</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.8</span> (258 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Museum</span></p>
+<p><strong>📍 Address:</strong> 5 ชั้น 2 Patpong 2 Alley, Surawong Rd</p>
+<p><strong>🏆 Labels:</strong> Museum</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Patpong+Museum/data=!4m7!3m6!1s0x30e29f97e8f7bceb:0x5fdcec26cc550c22!8m2!3d13.7287595!4d100.5321399!16s%2Fg%2F11h9bnk0jz!19sChIJ67z36Jef4jARIgxVzCbs3F8?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>INVESTORY Investment Discovery Museum</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.7</span> (125 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Museum</span></p>
+<p><strong>📍 Address:</strong> 93 ตลาดหลักทรัพย์แห่งประเทศไทย ถนน รัชดาภิเษก</p>
+<p><strong>🏆 Labels:</strong> Museum</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/INVESTORY+Investment+Discovery+Museum/data=!4m7!3m6!1s0x30e29e8edd3dd097:0xcaa64b1dc5ef87bb!8m2!3d13.7638254!4d100.5675326!16s%2Fg%2F11cncpqx82!19sChIJl9A93Y6e4jARu4fvxR1Lpso?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Bangkokian Museum</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.6</span> (1084 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Local History Museum</span></p>
+<p><strong>📍 Address:</strong> 273 Saphan Yao Alley</p>
+<p><strong>🏆 Labels:</strong> Museum</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Bangkokian+Museum/data=!4m7!3m6!1s0x30e298da097dcf47:0x2e1c1572252c4df6!8m2!3d13.7281433!4d100.5182074!16s%2Fm%2F043pp7k!19sChIJR899CdqY4jAR9k0sJXIVHC4?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>LV The Place Bangkok - Louis Vuitton Visionary Journeys</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.6</span> (176 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Museum</span></p>
+<p><strong>📍 Address:</strong> 496 Gaysorn Amarin, Unit GF-S01-A, Ground Floor, 502 Phloen Chit Rd</p>
+<p><strong>🏆 Labels:</strong> Museum</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/LV+The+Place+Bangkok+-+Louis+Vuitton+Visionary+Journeys/data=!4m7!3m6!1s0x30e29f3ea37f6465:0xd6a1f5364d6143be!8m2!3d13.7439979!4d100.5413947!16s%2Fg%2F11vsz30vv5!19sChIJZWR_oz6f4jARvkNhTTb1odY?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Yaowarat Chinatown Heritage Center</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (456 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Local History Museum</span></p>
+<p><strong>📍 Address:</strong> 661 ถ. เจริญกรุง</p>
+<p><strong>🏆 Labels:</strong> Museum</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E8%80%80%E5%8D%8E%E5%8A%9B%E5%94%90%E4%BA%BA%E8%A1%97%E5%8E%86%E5%8F%B2%E4%B8%AD%E5%BF%83/data=!4m7!3m6!1s0x30e2992725c7b58d:0xd900e77a0820e931!8m2!3d13.7377762!4d100.5135026!16s%2Fg%2F11h4bz66g2!19sChIJjbXHJSeZ4jARMekgCHrnANk?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Museum of Siam</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (6846 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Museum</span></p>
+<p><strong>📍 Address:</strong> 4 Sanam Chai Rd</p>
+<p><strong>🏆 Labels:</strong> Museum</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E6%9A%B9%E7%BD%97%E5%8D%9A%E7%89%A9%E9%A6%86/data=!4m7!3m6!1s0x30e29904e60c66bb:0x2d5ff22f7bc5bea0!8m2!3d13.744147!4d100.494137!16s%2Fm%2F0zdjzkr!19sChIJu2YM5gSZ4jARoL7Fey_yXy0?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Bangkok National Museum</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.6</span> (7313 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Museum</span></p>
+<p><strong>📍 Address:</strong> 4 Soi Na Phra That</p>
+<p><strong>🏆 Labels:</strong> Museum</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E6%9B%BC%E8%B0%B7%E5%9B%BD%E5%AE%B6%E5%8D%9A%E7%89%A9%E9%A6%86/data=!4m7!3m6!1s0x30e2990cc24b766d:0x55fea5dec504fd3b!8m2!3d13.7576171!4d100.4925167!16s%2Fm%2F02vnrfw!19sChIJbXZLwgyZ4jARO_0Exd6l_lU?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Bank of Thailand Museum</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.6</span> (146 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Museum</span></p>
+<p><strong>📍 Address:</strong> Samsen Rd</p>
+<p><strong>🏆 Labels:</strong> Museum</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E6%B3%B0%E5%9B%BD%E9%93%B6%E8%A1%8C%E5%8D%9A%E7%89%A9%E9%A6%86/data=!4m7!3m6!1s0x30e2996fa9606cb3:0x73cbb65f9b1152f7!8m2!3d13.767833!4d100.4984196!16s%2Fm%2F043jyjj!19sChIJs2xgqW-Z4jAR91IRm1-2y3M?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>King Prajadhipok Museum</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.7</span> (498 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">History Museum</span></p>
+<p><strong>📍 Address:</strong> 2 Lan Luang Rd</p>
+<p><strong>🏆 Labels:</strong> Museum</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/King+Prajadhipok+Museum/data=!4m7!3m6!1s0x30e299157a769a43:0x99b3ccf1ea576a1a!8m2!3d13.7561405!4d100.5064072!16s%2Fm%2F043k6v5!19sChIJQ5p2ehWZ4jARGmpX6vHMs5k?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Siam Square Park</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.2</span> (245 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">National Park</span></p>
+<p><strong>📍 Address:</strong> 254 Phaya Thai Rd</p>
+<p><strong>🏆 Labels:</strong> Park、Tourist Attraction</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E6%9A%B9%E7%BD%97%E5%B9%BF%E5%9C%BA%E5%85%AC%E5%9B%AD/data=!4m7!3m6!1s0x30e29ed257ffb433:0x10f6a8b0ab4c8070!8m2!3d13.7436502!4d100.5323277!16s%2Fg%2F11b6sy44t_!19sChIJM7T_V9Ke4jARcIBMq7Co9hA?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Benjakitti Park</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (112 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">National Park</span></p>
+<p><strong>📍 Address:</strong> 5/1-5/40 Ratchadamri Rd</p>
+<p><strong>🏆 Labels:</strong> Park</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E5%B7%B4%E5%90%9E%E5%93%87%E9%82%A3%E5%8A%AA%E6%8B%89%E5%85%AC%E5%9B%AD/data=!4m7!3m6!1s0x30e29f0e122cb839:0x4ab6c5b7604592ed!8m2!3d13.7487089!4d100.540151!16s%2Fg%2F11k9dz8lwk!19sChIJObgsEg6f4jAR7ZJFYLfFtko?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Lumphini Park</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (34487 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">City Park</span></p>
+<p><strong>📍 Address:</strong> Lumphini, Pathum Wan, Bangkok 10330</p>
+<p><strong>🏆 Labels:</strong> Park</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E4%BC%A6%E6%8A%AB%E5%B0%BC%E5%85%AC%E5%9B%AD/data=!4m7!3m6!1s0x30e29f26ed4bb01b:0xac01b20801f96936!8m2!3d13.7314281!4d100.5416984!16zL20vMDlyeGN6!19sChIJG7BL7Saf4jARNmn5AQiyAaw?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Benjakiti Park</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.6</span> (8545 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">National Park</span></p>
+<p><strong>📍 Address:</strong> Ratchadaphisek Rd</p>
+<p><strong>🏆 Labels:</strong> Park</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E7%8F%AD%E5%98%89%E7%90%A6%E7%BC%87%E7%9A%87%E5%90%8E%E5%85%AC%E5%9B%AD/data=!4m7!3m6!1s0x30e29f1bbc1ff399:0x272f7997bda0bbf6!8m2!3d13.7295129!4d100.5587134!16s%2Fg%2F121qyt78!19sChIJmfMfvBuf4jAR9rugvZd5Lyc?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Trail and Tail</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (325 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Pet-Friendly Park</span></p>
+<p><strong>📍 Address:</strong> 95 ซอย พร้อมมิตร</p>
+<p><strong>🏆 Labels:</strong> Park</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Trail+and+Tail/data=!4m7!3m6!1s0x30e29f1f689252f9:0xaa934b4db0d1a50a!8m2!3d13.7411654!4d100.5711949!16s%2Fg%2F11hdk19hgk!19sChIJ-VKSaB-f4jARCqXRsE1Lk6o?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Chulalongkorn University Centenary Park</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.6</span> (2920 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">National Park</span></p>
+<p><strong>📍 Address:</strong> 254 Phaya Thai Rd</p>
+<p><strong>🏆 Labels:</strong> Park</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E6%9C%B1%E6%8B%89%E9%9A%86%E5%8A%9F%E5%A4%A7%E5%AD%A6%E7%99%BE%E5%B9%B4%E4%B8%96%E7%BA%AA%E5%85%AC%E5%9B%AD/data=!4m7!3m6!1s0x30e2992be834db29:0xb8059010c70b7e11!8m2!3d13.7394304!4d100.5237535!16s%2Fg%2F11g9s_q0w5!19sChIJKds06CuZ4jAREX4LxxCQBbg?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Santiphap Park</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (3037 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">City Park</span></p>
+<p><strong>📍 Address:</strong> Ratchawithi Rd</p>
+<p><strong>🏆 Labels:</strong> Park</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Santiphap+Park/data=!4m7!3m6!1s0x30e29eb75f308ed7:0xf0100b33d0b3b20!8m2!3d13.76285!4d100.5413934!16s%2Fm%2F05mxgl_!19sChIJ144wX7ee4jARIDsLPbMAAQ8?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Somdet Saranrat Maneerom Public Park</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.2</span> (541 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Park</span></p>
+<p><strong>📍 Address:</strong> New Petchaburi Rd</p>
+<p><strong>🏆 Labels:</strong> Park、Tourist Attraction</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Somdet+Saranrat+Maneerom+Public+Park/data=!4m7!3m6!1s0x30e29e4f5abf7249:0xec8c3439e4080d4f!8m2!3d13.7424661!4d100.5906198!16s%2Fg%2F12hy92v5k!19sChIJSXK_Wk-e4jARTw0I5Dk0jOw?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>BMA Dog Park</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (111 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Pet-Friendly Park</span></p>
+<p><strong>📍 Address:</strong> 184/72 สุขุมวิท</p>
+<p><strong>🏆 Labels:</strong> Park</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/BMA+Dog+Park/data=!4m7!3m6!1s0x30e29f9182cc53cd:0xdfa717a9901ffc21!8m2!3d13.7335237!4d100.5582687!16s%2Fg%2F11s85pzql0!19sChIJzVPMgpGf4jARIfwfkKkXp98?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>สวนพรรณภิรมย์</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.2</span> (386 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Park</span></p>
+<p><strong>📍 Address:</strong> Rama IX Rd</p>
+<p><strong>🏆 Labels:</strong> Park</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E0%B8%AA%E0%B8%A7%E0%B8%99%E0%B8%9E%E0%B8%A3%E0%B8%A3%E0%B8%93%E0%B8%A0%E0%B8%B4%E0%B8%A3%E0%B8%A1%E0%B8%A2%E0%B9%8C/data=!4m7!3m6!1s0x30e29e417dac4b7b:0x7adbba47f2c7acf0!8m2!3d13.7515239!4d100.5916678!16s%2Fg%2F1pv5x5659!19sChIJe0usfUGe4jAR8KzH8ke623o?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Suan Phlu Park</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.3</span> (243 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Park</span></p>
+<p><strong>📍 Address:</strong> 507/2 Nang Linchi Rd</p>
+<p><strong>🏆 Labels:</strong> Park</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E8%90%B1%E8%92%B2%E5%85%AC%E5%9B%AD/data=!4m7!3m6!1s0x30e29f3a6b5b40ff:0xc966fdb946070097!8m2!3d13.7185082!4d100.5419562!16s%2Fg%2F11cs1kqm39!19sChIJ_0Bbazqf4jARlwAHRrn9Zsk?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Lumphini Park Bandstand</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.6</span> (100 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Park</span></p>
+<p><strong>📍 Address:</strong> 192 Rama IV Rd</p>
+<p><strong>🏆 Labels:</strong> Park</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Lumphini+Park+Bandstand/data=!4m7!3m6!1s0x30e29f26326320e1:0xf92c8c730337d1cb!8m2!3d13.7311342!4d100.5415864!16s%2Fg%2F11cm3h_jbd!19sChIJ4SBjMiaf4jARy9E3A3OMLPk?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Bangkok Hangover Tour</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.1</span> (41 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Tourist Attraction</span></p>
+<p><strong>📍 Address:</strong> 23 Soi Cowboy Suite 101, Sukhumvit Rd</p>
+<p><strong>🏆 Labels:</strong> Tourist Attraction</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Bangkok+Hangover+Tour/data=!4m7!3m6!1s0x30e29ee0bc72c225:0xcacd80614a475ff7!8m2!3d13.737025!4d100.562267!16s%2Fg%2F11c37l5v43!19sChIJJcJyvOCe4jAR919HSmGAzco?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>OneSiam Skywalk</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (1141 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Bridge</span></p>
+<p><strong>📍 Address:</strong> Phaya Thai Rd</p>
+<p><strong>🏆 Labels:</strong> Tourist Attraction</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/OneSiam+Skywalk/data=!4m7!3m6!1s0x30e29ecd589368bf:0x4fb12ce1f5b208ae!8m2!3d13.7462259!4d100.5306188!16s%2Fg%2F11hb44hnt3!19sChIJv2iTWM2e4jARrgiy9eEssU8?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Chaloemla Park</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.2</span> (196 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Tourist Attraction</span></p>
+<p><strong>📍 Address:</strong> QG2J+3M4</p>
+<p><strong>🏆 Labels:</strong> Tourist Attraction</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Chaloemla+Park/data=!4m7!3m6!1s0x30e29ecced789113:0x7285cbc395867a9a!8m2!3d13.750147!4d100.5316916!16s%2Fg%2F11bt_hypgl!19sChIJE5F47cye4jARmnqGlcPLhXI?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Viewing Point</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.3</span> (122 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Tourist Attraction</span></p>
+<p><strong>📍 Address:</strong> 89 Maha Rat Road</p>
+<p><strong>🏆 Labels:</strong> Tourist Attraction</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Viewing+Point/data=!4m7!3m6!1s0x30e299f8a264a0ab:0x6cb086f3227e98cf!8m2!3d13.7448659!4d100.4909543!16s%2Fg%2F11srgjpxx5!19sChIJq6BkoviZ4jARz5h-IvOGsGw?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Ma win the motorcycle cat</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.9</span> (101 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Tourist Attraction</span></p>
+<p><strong>📍 Address:</strong> Asok Montri Rd</p>
+<p><strong>🏆 Labels:</strong> Tourist Attraction</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Ma+win+the+motorcycle+cat/data=!4m7!3m6!1s0x30e29f336bbe5d71:0xa5dccf94ec7d3df8!8m2!3d13.7368789!4d100.561206!16s%2Fg%2F11ssf9_969!19sChIJcV2-azOf4jAR-D197JTP3KU?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Suan Saranrom</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (2581 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Tourist Attraction</span></p>
+<p><strong>📍 Address:</strong> PFXW+763 Between the intersection of New Road and Rajini ถ. เจริญกรุง</p>
+<p><strong>🏆 Labels:</strong> Tourist Attraction</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E8%8E%8E%E5%85%B0%E9%9A%86%E5%85%AC%E5%9B%AD/data=!4m7!3m6!1s0x30e299101c53dcdb:0xe423bca2f1e9a75b!8m2!3d13.7481302!4d100.4955593!16s%2Fg%2F121nrxw5!19sChIJ29xTHBCZ4jARW6fp8aK8I-Q?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>SEA LIFE Bangkok Ocean World</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (21948 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Tourist Attraction</span></p>
+<p><strong>📍 Address:</strong> ชั้น บี1-บี2 สยามพารากอน 991 Rama I Rd</p>
+<p><strong>🏆 Labels:</strong> Tourist Attraction</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/SEA+LIFE+Bangkok+Ocean+World/data=!4m7!3m6!1s0x30e29ecde53c821f:0xdd059f2a7a0bc650!8m2!3d13.7459351!4d100.5352057!16s%2Fm%2F0c3ympw!19sChIJH4I85c2e4jARUMYLeiqfBd0?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Suan Chatuchak</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.3</span> (497 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Tourist Attraction</span></p>
+<p><strong>📍 Address:</strong> ซอย เพชรบุรี 18 - ซอย Soi Phetchaburi 18</p>
+<p><strong>🏆 Labels:</strong> Tourist Attraction</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E6%9F%A5%E5%8B%92%E6%8B%89%E8%8A%B1%E5%9B%AD/data=!4m7!3m6!1s0x30e29eccec4b757d:0x11f261335251c789!8m2!3d13.7500569!4d100.5316902!16s%2Fg%2F11b_3b4q0d!19sChIJfXVL7Mye4jARicdRUjNh8hE?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>CentralWorld</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (67660 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Shopping Mall</span></p>
+<p><strong>📍 Address:</strong> 999/9 Rama I Rd</p>
+<p><strong>🏆 Labels:</strong> Shopping Center</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E5%B0%9A%E6%B3%B0%E4%B8%96%E7%95%8C%E8%B4%AD%E7%89%A9%E4%B8%AD%E5%BF%83/data=!4m7!3m6!1s0x30e29ecfc2f455e1:0xc4ad0280d8906604!8m2!3d13.7465337!4d100.5391488!16zL20vMGZuNTdn!19sChIJ4VX0ws-e4jARBGaQ2IACrcQ?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>MBK Center</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (42159 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Shopping Mall</span></p>
+<p><strong>📍 Address:</strong> 444 Phaya Thai Rd</p>
+<p><strong>🏆 Labels:</strong> Shopping Center</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E7%BE%A4%E4%BE%A8%E5%95%86%E4%B8%9A%E4%B8%AD%E5%BF%83/data=!4m7!3m6!1s0x30e29f93237736ed:0x405eb31f977656de!8m2!3d13.7447542!4d100.529956!16zL20vMDgyemh4!19sChIJ7TZ3I5Of4jAR3lZ2lx-zXkA?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Nana Square</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">3.9</span> (2539 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Shopping Mall</span></p>
+<p><strong>📍 Address:</strong> 49 Soi Sukhumvit 3</p>
+<p><strong>🏆 Labels:</strong> Shopping Center</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Nana+Square/data=!4m7!3m6!1s0x30e29ee79ba418bf:0x4d29ecc30a1f9c21!8m2!3d13.7425714!4d100.5527472!16s%2Fm%2F042xbhx!19sChIJvxikm-ee4jARIZwfCsPsKU0?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Centerpoint Siam Square</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (1036 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Shopping Mall</span></p>
+<p><strong>📍 Address:</strong> 292 Rama I Rd</p>
+<p><strong>🏆 Labels:</strong> Shopping Center</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Centerpoint+Siam+Square/data=!4m7!3m6!1s0x30e29ed270e6075f:0xf7b20eff3402259c!8m2!3d13.7450854!4d100.5331719!16s%2Fg%2F11g9qhftml!19sChIJXwfmcNKe4jARnCUCNP8Osvc?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>The Platinum Fashion Mall</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.3</span> (28020 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Shopping Mall</span></p>
+<p><strong>📍 Address:</strong> ชั้น 11, อาคารเดอะแพลตตินัม แฟชั่นมอลล์, 222, 1398 Phetchaburi Rd</p>
+<p><strong>🏆 Labels:</strong> Shopping Center</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/The+Platinum+Fashion+Mall/data=!4m7!3m6!1s0x30e29ecf3f7d7a67:0x33a8397a3fc06439!8m2!3d13.7502222!4d100.5395103!16zL20vMGZnNmd5!19sChIJZ3p9P8-e4jAROWTAP3o5qDM?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Amarin Plaza</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.1</span> (5846 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Shopping Mall</span></p>
+<p><strong>📍 Address:</strong> 496 502 Phloen Chit Rd</p>
+<p><strong>🏆 Labels:</strong> Shopping Center</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E9%98%BF%E7%8E%9B%E7%90%B3%E8%B4%AD%E7%89%A9%E4%B8%AD%E5%BF%83/data=!4m7!3m6!1s0x30e29eda9b36b1d3:0xbcc1bbe09f2e2d36!8m2!3d13.7439979!4d100.5413947!16s%2Fm%2F04gmthb!19sChIJ07E2m9qe4jARNi0un-C7wbw?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>The Market Bangkok</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.1</span> (2380 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Shopping Mall</span></p>
+<p><strong>📍 Address:</strong> 111 Ratchadamri Rd</p>
+<p><strong>🏆 Labels:</strong> Shopping Center</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/The+Market+Bangkok/data=!4m7!3m6!1s0x30e298152a711fd7:0x24c3f621e1b4492!8m2!3d13.7477612!4d100.5412712!16s%2Fg%2F11g0jsyxhd!19sChIJ1x9xKhWY4jARkkQbHmI_TAI?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Central Embassy</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (11732 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Shopping Mall</span></p>
+<p><strong>📍 Address:</strong> 1031 Phloen Chit Rd</p>
+<p><strong>🏆 Labels:</strong> Shopping Center</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E5%B0%9A%E6%B3%B0%E9%A2%86%E4%BD%BF%E8%B4%AD%E7%89%A9%E4%B8%AD%E5%BF%83/data=!4m7!3m6!1s0x30e29edb6795f6cf:0xdcb2997a2dc265f6!8m2!3d13.7437483!4d100.5465903!16s%2Fg%2F122_y42h!19sChIJz_aVZ9ue4jAR9mXCLXqZstw?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Siam Discovery</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (18990 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Shopping Mall</span></p>
+<p><strong>📍 Address:</strong> 194 Phaya Thai Rd</p>
+<p><strong>🏆 Labels:</strong> Shopping Center</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E6%9A%B9%E7%BD%97%E6%8E%A2%E7%B4%A2%E8%B4%AD%E7%89%A9%E4%B8%AD%E5%BF%83/data=!4m7!3m6!1s0x30e29ecd64894481:0x1959aeb4d6d27112!8m2!3d13.7468291!4d100.5313447!16s%2Fg%2F11bwf3727r!19sChIJgUSJZM2e4jAREnHS1rSuWRk?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Central Silom Complex</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (10819 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Shopping Mall</span></p>
+<p><strong>📍 Address:</strong> 1027 Phloen Chit Rd</p>
+<p><strong>🏆 Labels:</strong> Shopping Center</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E5%B0%9A%E6%B3%B0%E9%BD%90%E9%9A%86%E8%B4%AD%E7%89%A9%E4%B8%AD%E5%BF%83/data=!4m7!3m6!1s0x30e29edb3ccc201b:0x14e5d2b93a71e05a!8m2!3d13.7440648!4d100.5443437!16s%2Fm%2F03h16hl!19sChIJGyDMPNue4jARWuBxOrnS5RQ?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Siam Square One</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.3</span> (19354 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Shopping Mall</span></p>
+<p><strong>📍 Address:</strong> 388 Rama I Rd</p>
+<p><strong>🏆 Labels:</strong> Shopping Center</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E6%9A%B9%E7%BD%97%E4%B8%80%E5%8F%B7%E5%B9%BF%E5%9C%BA/data=!4m7!3m6!1s0x30e2992cca37dc2d:0xf0654779f9c6d968!8m2!3d13.7447505!4d100.5338589!16s%2Fg%2F11b6_knndm!19sChIJLdw3yiyZ4jARaNnG-XlHZfA?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Siam Center</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (6974 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Shopping Mall</span></p>
+<p><strong>📍 Address:</strong> 979 Rama I Rd</p>
+<p><strong>🏆 Labels:</strong> Shopping Center</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E6%9A%B9%E7%BD%97%E4%B8%AD%E5%BF%83/data=!4m7!3m6!1s0x30e29ecd81421b2b:0xa1affc34a5f5632c!8m2!3d13.7462793!4d100.5326779!16zL20vMGZncm50!19sChIJKxtCgc2e4jARLGP1pTT8r6E?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Erawan Bangkok</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.3</span> (476 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Shopping Mall</span></p>
+<p><strong>📍 Address:</strong> 494 Phloen Chit Rd</p>
+<p><strong>🏆 Labels:</strong> Shopping Center</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E7%88%B1%E4%BE%A3%E6%B9%BE%E8%B4%AD%E7%89%A9%E4%B8%AD%E5%BF%83/data=!4m7!3m6!1s0x30e2993a5c6c7519:0x61da02c29dd05357!8m2!3d13.743631!4d100.5406107!16s%2Fg%2F1tz73d_7!19sChIJGXVsXDqZ4jARV1PQncIC2mE?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Palladium World</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.0</span> (1978 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Shopping Mall</span></p>
+<p><strong>📍 Address:</strong> 555 Ratchaprarop Rd</p>
+<p><strong>🏆 Labels:</strong> Shopping Center</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Palladium+World/data=!4m7!3m6!1s0x30e29f265bdaa0c1:0xf4dc089236313c30!8m2!3d13.7501971!4d100.5422412!16s%2Fg%2F11fd70dpdr!19sChIJwaDaWyaf4jARMDwxNpII3PQ?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Times Square</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.0</span> (2000 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Shopping Mall</span></p>
+<p><strong>📍 Address:</strong> 246 Sukhumvit Rd</p>
+<p><strong>🏆 Labels:</strong> Shopping Center</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E6%97%B6%E4%BB%A3%E5%B9%BF%E5%9C%BA/data=!4m7!3m6!1s0x30e29ee3eabb4b35:0x61ddea1693770037!8m2!3d13.7377647!4d100.558792!16s%2Fg%2F1tnxz2f0!19sChIJNUu76uOe4jARNwB3kxbq3WE?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Gaysorn Plaza</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (1891 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Shopping Mall</span></p>
+<p><strong>📍 Address:</strong> 999 Phloen Chit Rd</p>
+<p><strong>🏆 Labels:</strong> Shopping Center</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E7%9B%96%E9%A2%82%E5%B9%BF%E5%9C%BA/data=!4m7!3m6!1s0x30e29fbc75cf1e4d:0x7f01aff5677e58fc!8m2!3d13.745134!4d100.5407781!16s%2Fg%2F11h7fnhyjd!19sChIJTR7Pdbyf4jAR_Fh-Z_WvAX8?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Siam Paragon</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (55980 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Shopping Mall</span></p>
+<p><strong>📍 Address:</strong> 991/1 Rama I Rd</p>
+<p><strong>🏆 Labels:</strong> Shopping Center</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E6%9A%B9%E7%BD%97%E7%99%BE%E4%B8%BD%E5%AE%AB/data=!4m7!3m6!1s0x30e29ecde3aee521:0x9f43939a2caf2963!8m2!3d13.7457749!4d100.5344017!16zL20vMDltbWho!19sChIJIeWu482e4jARYymvLJqTQ58?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Siam Square</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.6</span> (1835 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Shopping Mall</span></p>
+<p><strong>📍 Address:</strong> 1 Siam Square Soi 7</p>
+<p><strong>🏆 Labels:</strong> Shopping Center</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E6%9A%B9%E7%BD%97%E5%B9%BF%E5%9C%BA/data=!4m7!3m6!1s0x30e29f2a0551e5f9:0xa8864ee239de9339!8m2!3d13.7446395!4d100.5329147!16zL20vMDg4dnF6!19sChIJ-eVRBSqf4jAROZPeOeJOhqg?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Terminal 21 Asok</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.6</span> (14311 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Shopping Mall</span></p>
+<p><strong>📍 Address:</strong> 88 Soi Sukhumvit 19</p>
+<p><strong>🏆 Labels:</strong> Shopping Center</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Terminal+21+Asok/data=!4m7!3m6!1s0x30e29f1e6e996bb9:0x3383716c9b049379!8m2!3d13.7379452!4d100.5604614!16s%2Fg%2F11h7ps3x1v!19sChIJuWuZbh6f4jAReZMEm2xxgzM?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Indra Square</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.3</span> (2886 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Shopping Mall</span></p>
+<p><strong>📍 Address:</strong> อินทราสแควร์ .ราชปรารภ มักกะสัน ราชเทวี</p>
+<p><strong>🏆 Labels:</strong> Shopping Center</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Indra+Square/data=!4m7!3m6!1s0x30e29fde186ee6fd:0x34e3e501ee9e2d7c!8m2!3d13.7533402!4d100.5413372!16s%2Fg%2F11fqbws96n!19sChIJ_eZuGN6f4jARfC2e7gHl4zQ?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>The Mercury Ville @ Chidlom</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.2</span> (3607 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Shopping Mall</span></p>
+<p><strong>📍 Address:</strong> 540 Phloen Chit Rd</p>
+<p><strong>🏆 Labels:</strong> Shopping Center</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/The+Mercury+Ville+@+Chidlom/data=!4m7!3m6!1s0x30e29fee9e8a8c95:0x31c0e94a92a247b6!8m2!3d13.7434454!4d100.5441462!16s%2Fg%2F11fd6dh_sz!19sChIJlYyKnu6f4jARtkeikkrpwDE?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Watergate Pavillion</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.2</span> (1811 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Shopping Mall</span></p>
+<p><strong>📍 Address:</strong> 567 Ratchaprarop Rd</p>
+<p><strong>🏆 Labels:</strong> Shopping Center</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Watergate+Pavillion/data=!4m7!3m6!1s0x30e29ec608c2005b:0x73ca18e38502bf78!8m2!3d13.7514995!4d100.5423786!16s%2Fg%2F1jkym26c2!19sChIJWwDCCMae4jAReL8CheMYynM?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>MidTown Asoke</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.0</span> (408 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Shopping Mall</span></p>
+<p><strong>📍 Address:</strong> 189/1 Sukhumvit 21 Rd</p>
+<p><strong>🏆 Labels:</strong> Shopping Center</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/MidTown+Asoke/data=!4m7!3m6!1s0x30e29ee569962f7d:0x20755ab5b3a20cfb!8m2!3d13.7437661!4d100.5618461!16s%2Fg%2F1ptydqpck!19sChIJfS-WaeWe4jAR-wyis7VadSA?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>City Complex</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.2</span> (614 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Shopping Mall</span></p>
+<p><strong>📍 Address:</strong> Phetchaburi Rd</p>
+<p><strong>🏆 Labels:</strong> Shopping Center</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/City+Complex/data=!4m7!3m6!1s0x30e29ecf4860bd11:0x953177d36a11451!8m2!3d13.7509294!4d100.5396187!16s%2Fm%2F042xbcj!19sChIJEb1gSM-e4jARURShNn0XUwk?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Baiyoke Shopping Centre</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (312 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Shopping Mall</span></p>
+<p><strong>📍 Address:</strong> Baiyoke Tower II, Ratchaprarop Rd</p>
+<p><strong>🏆 Labels:</strong> Shopping Center</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Baiyoke+Shopping+Centre/data=!4m7!3m6!1s0x30e29ec880ba7353:0xd606fd50c47405d1!8m2!3d13.7543963!4d100.5403564!16s%2Fg%2F11cs69rc3q!19sChIJU3O6gMie4jAR0QV0xFD9BtY?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>The Portico Langsuan</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.1</span> (252 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Shopping Mall</span></p>
+<p><strong>📍 Address:</strong> 31 Soi Langsuan</p>
+<p><strong>🏆 Labels:</strong> Shopping Center</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/The+Portico+Langsuan/data=!4m7!3m6!1s0x30e29edbac590b3f:0x3899519e4717dac2!8m2!3d13.742175!4d100.543867!16s%2Fg%2F11ck6px_q2!19sChIJPwtZrNue4jARwtoXR55RmTg?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>At One Market</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.2</span> (128 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Market</span></p>
+<p><strong>📍 Address:</strong> 27 สุขุมวิท ซ. 1</p>
+<p><strong>🏆 Labels:</strong> Local Market</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/At+One+Market/data=!4m7!3m6!1s0x30e29edd7a0f00a9:0x82c7147c6d9dc85f!8m2!3d13.7428552!4d100.5512389!16s%2Fg%2F11cnbs8jpq!19sChIJqQAPet2e4jARX8idbXwUx4I?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Pratunam Night Market</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.3</span> (4545 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Night Market</span></p>
+<p><strong>📍 Address:</strong> Unnamed Road</p>
+<p><strong>🏆 Labels:</strong> Local Market</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Pratunam+Night+Market/data=!4m7!3m6!1s0x30e29f8919ded423:0x77a8459aaa6e0e96!8m2!3d13.7535518!4d100.5397266!16s%2Fg%2F11gxt5v45b!19sChIJI9TeGYmf4jARlg5uqppFqHc?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>TGIF MARKET</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.2</span> (874 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Flea Market</span></p>
+<p><strong>📍 Address:</strong> 999/9 Rama I Rd</p>
+<p><strong>🏆 Labels:</strong> Local Market</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/TGIF+MARKET/data=!4m7!3m6!1s0x30e29ecfe4afcc73:0xb5824c40c2f3733d!8m2!3d13.7464076!4d100.5398916!16s%2Fg%2F11gdkk30x1!19sChIJc8yv5M-e4jARPXPzwkBMgrU?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>The Market Bangkok</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.1</span> (2380 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Shopping Mall</span></p>
+<p><strong>📍 Address:</strong> 111 Ratchadamri Rd</p>
+<p><strong>🏆 Labels:</strong> Local Market</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/The+Market+Bangkok/data=!4m7!3m6!1s0x30e298152a711fd7:0x24c3f621e1b4492!8m2!3d13.7477612!4d100.5412712!16s%2Fg%2F11g0jsyxhd!19sChIJ1x9xKhWY4jARkkQbHmI_TAI?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Pratunam Market</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (3038 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Market</span></p>
+<p><strong>📍 Address:</strong> Soi Phetchaburi 21</p>
+<p><strong>🏆 Labels:</strong> Local Market</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Pratunam+Market/data=!4m7!3m6!1s0x30e29fe8aa855c75:0xf3f07635511f7f1a!8m2!3d13.7528035!4d100.5405977!16zL20vMGZnMjJk!19sChIJdVyFquif4jARGn8fUTV28PM?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>ตลาดซุปเปอร์วันพลาซ่า Super One Plaza Market</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.3</span> (164 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Fresh Market</span></p>
+<p><strong>📍 Address:</strong> 1200 1 Sukhumvit 71 Rd</p>
+<p><strong>🏆 Labels:</strong> Local Market</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E0%B8%95%E0%B8%A5%E0%B8%B2%E0%B8%94%E0%B8%8B%E0%B8%B8%E0%B8%9B%E0%B9%80%E0%B8%9B%E0%B8%AD%E0%B8%A3%E0%B9%8C%E0%B8%A7%E0%B8%B1%E0%B8%99%E0%B8%9E%E0%B8%A5%E0%B8%B2%E0%B8%8B%E0%B9%88%E0%B8%B2+Super+One+Plaza+Market/data=!4m7!3m6!1s0x30e29f4b22cccb61:0x5a5a474b00beea4c!8m2!3d13.739943!4d100.5999133!16s%2Fg%2F11gtgdplth!19sChIJYcvMIkuf4jARTOq-AEtHWlo?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Palladium Night Market</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.2</span> (6747 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Night Market</span></p>
+<p><strong>📍 Address:</strong> 487 Phetchaburi Rd</p>
+<p><strong>🏆 Labels:</strong> Local Market</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Palladium+Night+Market/data=!4m7!3m6!1s0x30e29ec7928b3d53:0xe42848502341f745!8m2!3d13.7507508!4d100.5413195!16s%2Fg%2F11c2lt5v93!19sChIJUz2Lksee4jARRfdBI1BIKOQ?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Pantip Plaza Night Street Market</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">3.8</span> (133 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Market</span></p>
+<p><strong>📍 Address:</strong> 2192, Soi Phetchaburi 13</p>
+<p><strong>🏆 Labels:</strong> Local Market</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Pantip+Plaza+Night+Street+Market/data=!4m7!3m6!1s0x30e29ecf29d4a297:0x4dc59c143775e98d!8m2!3d13.7508794!4d100.5380314!16s%2Fg%2F11bzyxhnwq!19sChIJl6LUKc-e4jARjel1NxScxU0?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>SWU Nightmarket</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (119 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Night Market</span></p>
+<p><strong>📍 Address:</strong> 114 Sukhumvit Rd</p>
+<p><strong>🏆 Labels:</strong> Local Market</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/SWU+Nightmarket/data=!4m7!3m6!1s0x30e29fb4a84b4c33:0xb7e2c70991d4e18a!8m2!3d13.744869!4d100.5634129!16s%2Fg%2F11sjqcrmd_!19sChIJM0xLqLSf4jARiuHUkQnH4rc?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Villa Market Ploenchit</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.2</span> (219 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Store</span></p>
+<p><strong>📍 Address:</strong> 2 Sukhumvit Rd</p>
+<p><strong>🏆 Labels:</strong> Local Market</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Villa+Market+Ploenchit/data=!4m7!3m6!1s0x30e29fbbf83ad793:0x5f49957d33d016e3!8m2!3d13.7414779!4d100.5514596!16s%2Fg%2F11c2r128r_!19sChIJk9c6-Luf4jAR4xbQM32VSV8?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>SWU International Flea Market</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (241 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Flea Market</span></p>
+<p><strong>📍 Address:</strong> 114 ถนน สุขุมวิท</p>
+<p><strong>🏆 Labels:</strong> Local Market</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/SWU+International+Flea+Market/data=!4m7!3m6!1s0x30e29ef00700df87:0x9b3bb328e2302471!8m2!3d13.7448722!4d100.5633619!16s%2Fg%2F11f06jbg25!19sChIJh98AB_Ce4jARcSQw4iizO5s?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Silom Square Market</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.3</span> (160 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Market</span></p>
+<p><strong>📍 Address:</strong> ตลาด SS สีลมสแควร์ 45 ซอย นราธิวาสราชนครินทร์ Surawong Rd</p>
+<p><strong>🏆 Labels:</strong> Local Market</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Silom+Square+Market/data=!4m7!3m6!1s0x30e298d346ac8cd3:0xb8558507353f41d9!8m2!3d13.7278725!4d100.5285739!16s%2Fg%2F1q5gp5xtq!19sChIJ04ysRtOY4jAR2UE_NQeFVbg?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Ekkamai Fresh Market</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.2</span> (192 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Market</span></p>
+<p><strong>📍 Address:</strong> ร้านเย็บผ้า ตลาดเอกมัย</p>
+<p><strong>🏆 Labels:</strong> Local Market</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Ekkamai+Fresh+Market/data=!4m7!3m6!1s0x30e29e4ee75fe4a7:0xa55623d4cb1076dd!8m2!3d13.7403511!4d100.5903313!16s%2Fg%2F1hd_1g604!19sChIJp-Rf506e4jAR3XYQy9QjVqU?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Bangkok Farmers' Market @Gateway Ekkamai</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.0</span> (122 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Agricultural Market</span></p>
+<p><strong>📍 Address:</strong> 976, 9 Sukhumvit Rd</p>
+<p><strong>🏆 Labels:</strong> Local Market</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Bangkok+Farmers%27+Market+@Gateway+Ekkamai/data=!4m7!3m6!1s0x30e29fa5371efe77:0x286ea078ec8d9185!8m2!3d13.7191514!4d100.5853242!16s%2Fg%2F11clllg8wg!19sChIJd_4eN6Wf4jARhZGN7Higbig?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Wat Suan Phlu</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.1</span> (1186 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Fresh Market</span></p>
+<p><strong>📍 Address:</strong> Thanon Suan Phlu</p>
+<p><strong>🏆 Labels:</strong> Local Market</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E8%90%B1%E8%92%B2%E5%86%9C%E8%B4%B8%E5%B8%82%E5%9C%BA/data=!4m7!3m6!1s0x30e29f30e15ff2e5:0xc6952689c59119d4!8m2!3d13.7190795!4d100.5383295!16s%2Fg%2F11c209mkjl!19sChIJ5fJf4TCf4jAR1BmRxYkmlcY?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>The One Ratchada</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.2</span> (35033 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Night Market</span></p>
+<p><strong>📍 Address:</strong> 55 10 Ratchadaphisek Rd</p>
+<p><strong>🏆 Labels:</strong> Local Market</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/The+One+Ratchada/data=!4m7!3m6!1s0x30e29e88b8f0625d:0x2c30ba0b8d64f91d!8m2!3d13.7670687!4d100.5686827!16s%2Fg%2F11b7y78w99!19sChIJXWLwuIie4jARHflkjQu6MCw?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Patpong</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">3.7</span> (16500 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Night Market</span></p>
+<p><strong>📍 Address:</strong> 61, ซอย Thanon Phat Phong</p>
+<p><strong>🏆 Labels:</strong> Local Market</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E6%8B%8D%E8%93%AC%E8%A1%97%E5%A4%9C%E5%B8%82/data=!4m7!3m6!1s0x30e29f2b7bafd625:0x1f35cde2f40ba657!8m2!3d13.7288752!4d100.5317455!16s%2Fg%2F12hrm8nl_!19sChIJJdaveyuf4jARV6YL9OLNNR8?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Chatuchak Night Market</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (384 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Market</span></p>
+<p><strong>📍 Address:</strong> เลขที่ โครงการ 9 ซอย 13/1 เลขที่ 015 จตุจักร</p>
+<p><strong>🏆 Labels:</strong> Local Market</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Chatuchak+Night+Market/data=!4m7!3m6!1s0x30e29d5aa8f96a8f:0x4dd1e2671c3ec837!8m2!3d13.80157!4d100.55096!16s%2Fg%2F11s8422g4w!19sChIJj2r5qFqd4jARN8g-HGfi0U0?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Jodd Fairs</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.3</span> (12846 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Night Market</span></p>
+<p><strong>📍 Address:</strong> Rama IX Rd</p>
+<p><strong>🏆 Labels:</strong> Local Market</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/%E6%9F%A5%E5%BE%B7%E5%A4%9C%E5%B8%82/data=!4m7!3m6!1s0x30e29fb274407d93:0x2aba451897c0b5f!8m2!3d13.7565029!4d100.5669228!16s%2Fg%2F11s0cx585k!19sChIJk31AdLKf4jARXwt8iVGkqwI?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Vesper</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (1002 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Cocktail Pub</span></p>
+<p><strong>📍 Address:</strong> 10/15 Sala Daeng 2 Alley, Si Lom, Bang Rak, Bangkok 10500</p>
+<p><strong>🏆 Labels:</strong> Pub-Lover</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/dir//Vesper+bangkok/data=!4m6!4m5!1m1!4e2!1m2!1m1!1s0x30e29f2c415e8937:0x278e9188402d6d1c?sa=X&amp;ved=1t:3061&amp;ictx=111" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Mahaniyom Cocktail Bar</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.7</span> (178 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Cocktail Pub</span></p>
+<p><strong>📍 Address:</strong> 2nd floor, 104 Maha Set Rd, Si Phraya, Bang Rak, Bangkok 10500</p>
+<p><strong>🏆 Labels:</strong> Pub-Lover</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps?sca_esv=66697bfd130ff546&amp;sxsrf=ADLYWILSbgWC7BRtUvE6eym4cTBHwUGNNg:1733450531792&amp;gs_lp=Egxnd3Mtd2l6LXNlcnAiEU1haGFuaXlvbSBiYW5na29rKgIIATIOEC4YgAQYxwEYywEYrwEyBhAAGAcYHjIGEAAYBxgeMgYQABgHGB4yBhAAGAcYHjIGEAAYBxgeMggQABiABBjLATIEEAAYHjIEEAAYHjIIEAAYgAQYogRIq2RQrCNY3kVwAngAkAEAmAFKoAGMBaoBAjEwuAEDyAEA-AEBmAINoALsN8ICChAAGLADGNYEGEfCAg8QLhiABBgTGMcBGA0YrwHCAggQABgTGAcYHsICHhAuGIAEGBMYxwEYDRivARiXBRjcBBjeBBjgBNgBAcICHRAuGIAEGMcBGMsBGK8BGJcFGNwEGN4EGOAE2AEBmAMAiAYBkAYKugYGCAEQARgUkgcGMTEuOS0yoAeGLQ&amp;um=1&amp;ie=UTF-8&amp;fb=1&amp;gl=sg&amp;sa=X&amp;geocode=KWnxLIb7meIwMUhq421oRtBZ&amp;daddr=2nd+floor,+104+Maha+Set+Rd,+Si+Phraya,+Bang+Rak,+Bangkok+10500%E6%B3%B0%E5%9B%BD" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Bar Us</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.7</span> (243 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Cocktail Pub</span></p>
+<p><strong>📍 Address:</strong> 61/37 Floor, Opposite side of security kiosk ( Glass door) Floor 1, 1 Soi Sukhumvit 26, Khlong Tan, Khlong Toei</p>
+<p><strong>🏆 Labels:</strong> Pub-Lover</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps?sca_esv=66697bfd130ff546&amp;sxsrf=ADLYWII_nv2Ggx-SrmJhm0-awY5r7TJIFQ:1733450221041&amp;gs_lp=Egxnd3Mtd2l6LXNlcnAiBkJhciB1cyoCCAAyDhAuGIAEGMcBGMsBGK8BMggQABiABBjLATIIEAAYgAQYywEyCBAAGIAEGMsBMggQABiABBjLATIIEAAYgAQYywEyCBAAGIAEGMsBMggQABiABBjLATIIEAAYgAQYywEyCBAAGIAEGMsBMh0QLhiABBjHARjLARivARiXBRjcBBjeBBjgBNgBAUi4OlCbG1jTMXABeAGQAQCYAVSgAd4DqgEBN7gBA8gBAPgBAZgCCKAChwTCAgoQABiwAxjWBBhHwgIEECMYJ8ICChAjGIAEGCcYigXCAgoQLhiABBhDGIoFwgILEAAYgAQYsQMYgwHCAgoQABiABBhDGIoFwgIREC4YgAQYsQMY0QMYgwEYxwHCAgUQLhiABMICBRAAGIAEwgIZEC4YgAQYQxiKBRiXBRjcBBjeBBjgBNgBAcICCxAuGIAEGMcBGK8BmAMAiAYBkAYKugYGCAEQARgUkgcBOKAH-z0&amp;um=1&amp;ie=UTF-8&amp;fb=1&amp;gl=sg&amp;sa=X&amp;geocode=KRuUGmVCn-IwMTJvhm3zG1-A&amp;daddr=61/37+Floor,+Opposite+side+of+security+kiosk+(+Glass+door)+Floor+1,+1+Soi+Sukhumvit+26,+Khlong+Tan,+Khlong+Toei,+Bangkok+10110%E6%B3%B0%E5%9B%BD" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>CRU Champagne</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (462 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Pub</span></p>
+<p><strong>📍 Address:</strong> Centara Grand at CentralWorld, 999/99 Rama 1 road,</p>
+<p><strong>🏆 Labels:</strong> Pub-Lover</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/CRU+Champagne/data=!4m7!3m6!1s0x30e299307e4b661b:0x14fffc57c5f355f8!8m2!3d13.747816!4d100.538501!16s%2Fg%2F11c5xp3tkm!19sChIJG2ZLfjCZ4jAR-FXzxVf8_xQ?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>The Speakeasy Rooftop Bar</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (962 reviews)</p>
+<p><strong>💰 Average Price:</strong> $</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Cocktail Pub</span></p>
+<p><strong>📍 Address:</strong> 55, โฮเทล มิวส์ แบงค็อก 55/555 555 Lang Suan Rd</p>
+<p><strong>🏆 Labels:</strong> Pub-Lover</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/The+Speakeasy+Rooftop+Bar/data=!4m7!3m6!1s0x30e29f2a56fc5ee7:0x15d98e44e34ba164!8m2!3d13.7402057!4d100.5436412!16s%2Fg%2F11cs1rfcxt!19sChIJ5178Viqf4jARZKFL40SO2RU?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>The Sportsman Sports Bar and Restaurant</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (1872 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Sports Bar</span></p>
+<p><strong>📍 Address:</strong> 10 22 Soi Sukhumvit 13</p>
+<p><strong>🏆 Labels:</strong> Pub-Lover</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/The+Sportsman+Sports+Bar+and+Restaurant/data=!4m7!3m6!1s0x30e29ee36456a1c3:0xabd2d9db6bf28e1a!8m2!3d13.7412286!4d100.5577766!16s%2Fg%2F1tdyhnlp!19sChIJw6FWZOOe4jARGo7ya9vZ0qs?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Gourmet Bar</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.8</span> (360 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Pub</span></p>
+<p><strong>📍 Address:</strong> Fl 1, Novotel Bangkok on Siam Square, 392/44 Siam Square Soi 6</p>
+<p><strong>🏆 Labels:</strong> Pub-Lover</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Gourmet+Bar/data=!4m7!3m6!1s0x30e29ed2021269c5:0x9ead5865937378cd!8m2!3d13.7444593!4d100.5347883!16s%2Fg%2F11c2pv4518!19sChIJxWkSAtKe4jARzXhzk2VYrZ4?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Bar.Yard</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (672 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Pub</span></p>
+<p><strong>📍 Address:</strong> Kimpton Maa-Lai Bangkok, 78 Soi Ton Son</p>
+<p><strong>🏆 Labels:</strong> Pub-Lover</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Bar.Yard/data=!4m7!3m6!1s0x30e29f25811b50f1:0xdf37aea616c17985!8m2!3d13.7376264!4d100.5434589!16s%2Fg%2F11jtd6z9j0!19sChIJ8VAbgSWf4jARhXnBFqauN98?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>View Bangkok Rooftop Bar &amp; Restaurant</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.8</span> (833 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Pub</span></p>
+<p><strong>📍 Address:</strong> 9th Floor Novotel Bangkok Platinum Pratunam, 220 Phetchaburi Rd</p>
+<p><strong>🏆 Labels:</strong> Pub-Lover</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/View+Bangkok+Rooftop+Bar+%26+Restaurant/data=!4m7!3m6!1s0x30e29f5f4ae08247:0x7103111ef3d1cc48!8m2!3d13.7495844!4d100.5406633!16s%2Fg%2F11gxxw42k8!19sChIJR4LgSl-f4jARSMzR8x4RA3E?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>OFTR Bar</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (228 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Pub</span></p>
+<p><strong>📍 Address:</strong> 245, 11 Sukhumvit 31</p>
+<p><strong>🏆 Labels:</strong> Pub-Lover</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/OFTR+Bar/data=!4m7!3m6!1s0x30e29f90dc5520c7:0xfa8725d6de45bc2a!8m2!3d13.7379931!4d100.5666197!16s%2Fg%2F11mr1ryy5r!19sChIJxyBV3JCf4jARKrxF3tYlh_o?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Lennon's</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (190 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Cocktail Pub</span></p>
+<p><strong>📍 Address:</strong> 1041/38 Phloen Chit Rd</p>
+<p><strong>🏆 Labels:</strong> Pub-Lover</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Lennon%27s/data=!4m7!3m6!1s0x30e29f3abaf55835:0x24adb9fd3d7ad7af!8m2!3d13.7434681!4d100.5489232!16s%2Fg%2F11fmc4gl4p!19sChIJNVj1ujqf4jARr9d6Pf25rSQ?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Chequers British Pub</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (339 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Bistro</span></p>
+<p><strong>📍 Address:</strong> 5, chequers British pub, 11 Sukhumvit 4 Alley</p>
+<p><strong>🏆 Labels:</strong> Pub-Lover</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Chequers+British+Pub/data=!4m7!3m6!1s0x30e29ee0bdde01d1:0x7188b25f67f2aefa!8m2!3d13.7408001!4d100.5530472!16s%2Fg%2F1tkngxgx!19sChIJ0QHeveCe4jAR-q7yZ1-yiHE?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>The Clubhouse</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.2</span> (582 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Sports Bar</span></p>
+<p><strong>📍 Address:</strong> 21/1-3 Soi Sukhumvit 23</p>
+<p><strong>🏆 Labels:</strong> Pub-Lover</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/The+Clubhouse/data=!4m7!3m6!1s0x30e29ee3505333c9:0xc324e646abc4e66a!8m2!3d13.7383941!4d100.5629079!16s%2Fg%2F1thvq421!19sChIJyTNTUOOe4jARaubEq0bmJMM?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Hillary 2</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.1</span> (1287 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Pub</span></p>
+<p><strong>📍 Address:</strong> 19 Sukhumvit 4 Alley</p>
+<p><strong>🏆 Labels:</strong> Pub-Lover</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Hillary+2/data=!4m7!3m6!1s0x30e29ee7525baea3:0x827f505e9e2dc390!8m2!3d13.7406652!4d100.5531276!16s%2Fg%2F1twywzsy!19sChIJo65bUuee4jARkMMtnl5Qf4I?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Spectrum Lounge &amp; Bar</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (926 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Pub</span></p>
+<p><strong>📍 Address:</strong> Hyatt Regency Bangkok, 1 Soi Sukhumvit 13</p>
+<p><strong>🏆 Labels:</strong> Pub-Lover</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Spectrum+Lounge+%26+Bar/data=!4m7!3m6!1s0x30e29feb99db89d9:0xfb4b09eb3e21401c!8m2!3d13.7397571!4d100.5568302!16s%2Fg%2F11h2p2xb9b!19sChIJ2Ynbmeuf4jARHEAhPusJS_s?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>The Game American Sports Bar &amp; Restaurant</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.1</span> (1413 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Sports Bar</span></p>
+<p><strong>📍 Address:</strong> 137/1 Sukhumvit Rd</p>
+<p><strong>🏆 Labels:</strong> Pub-Lover</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/The+Game+American+Sports+Bar+%26+Restaurant/data=!4m7!3m6!1s0x30e29ee6c4118d9d:0x8b1da3a5e0ff296f!8m2!3d13.7403907!4d100.5559042!16s%2Fg%2F11r8clmf9!19sChIJnY0RxOae4jARbyn_4KWjHYs?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Diplomat Bar</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.3</span> (137 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Pub</span></p>
+<p><strong>📍 Address:</strong> Lobby Level, 87/3 Witthayu Rd</p>
+<p><strong>🏆 Labels:</strong> Pub-Lover</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Diplomat+Bar/data=!4m7!3m6!1s0x30e29edebbbd6231:0xb1a6e99248fd5b4e!8m2!3d13.7385316!4d100.5482151!16s%2Fg%2F1tflcppc!19sChIJMWK9u96e4jARTlv9SJLpprE?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>CALM Bangkok - Grill, Garden &amp; Guinguette</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.8</span> (324 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Pub</span></p>
+<p><strong>📍 Address:</strong> 231/2 , Soi Sukhumvit 31 (Soi Sawasdee), Sukhumvit Road Khlong Ton Nuea Sub-District</p>
+<p><strong>🏆 Labels:</strong> Pub-Lover</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/CALM+Bangkok+-+Grill,+Garden+%26+Guinguette/data=!4m7!3m6!1s0x30e29f3b07c255ab:0x1fba878f91e61d28!8m2!3d13.7429428!4d100.5678476!16s%2Fg%2F11tfjjrbdc!19sChIJq1XCBzuf4jARKB3mkY-Huh8?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>PIN 31 Bar</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.8</span> (222 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿400-500</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Pub</span></p>
+<p><strong>📍 Address:</strong> 6th Floor, 29 Soi Sukhumvit 31</p>
+<p><strong>🏆 Labels:</strong> Pub-Lover</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/PIN+31+Bar/data=!4m7!3m6!1s0x30e29f19a8920bb5:0x22b3d8c75453ea04!8m2!3d13.7374556!4d100.5668053!16s%2Fg%2F11j1l2h6_6!19sChIJtQuSqBmf4jARBOpTVMfYsyI?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Alonetogether Bar Bangkok</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.1</span> (418 reviews)</p>
+<p><strong>💰 Average Price:</strong> $</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Cocktail Pub</span></p>
+<p><strong>📍 Address:</strong> 29 Sukhumvit 31</p>
+<p><strong>🏆 Labels:</strong> Pub-Lover</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Alonetogether+Bar+Bangkok/data=!4m7!3m6!1s0x30e29fb884e0944f:0x433da587a874aac1!8m2!3d13.7376824!4d100.5667354!16s%2Fg%2F11h4lm_bth!19sChIJT5TghLif4jARwap0qIelPUM?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Hair of the Dog Craft Beer and Gin Experience Phoen Chit</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (244 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Pub</span></p>
+<p><strong>📍 Address:</strong> Mahatun Plaza, 2nd Floor, 888/26 Ploenchit Road</p>
+<p><strong>🏆 Labels:</strong> Pub-Lover</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Hair+of+the+Dog+Craft+Beer+and+Gin+Experience+Phoen+Chit/data=!4m7!3m6!1s0x30e29edc536fdb97:0xcd1b6dc2583a7bf6!8m2!3d13.742017!4d100.549171!16s%2Fg%2F11cjhnm132!19sChIJl9tvU9ye4jAR9ns6WMJtG80?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Axis &amp; Spin Rooftop Restaurant &amp; Bar (38th floor)</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.8</span> (928 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿1,000+</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Pub</span></p>
+<p><strong>📍 Address:</strong> 38th Floor 413 Sukhumvit Rd</p>
+<p><strong>🏆 Labels:</strong> Pub-Lover</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Axis+%26+Spin+Rooftop+Restaurant+%26+Bar+%2838th+floor%29/data=!4m7!3m6!1s0x30e29ee3205c0915:0x29e12b9a7c9fb8c!8m2!3d13.7361149!4d100.5619832!16s%2Fg%2F11b8c3tfdl!19sChIJFQlcIOOe4jARjPvJp7kSngI?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Hustlers Pool and Sports Bar</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (350 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Pub</span></p>
+<p><strong>📍 Address:</strong> Times Square Building B2-2A ซอย 14 Suk Chai Alley</p>
+<p><strong>🏆 Labels:</strong> Pub-Lover</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Hustlers+Pool+and+Sports+Bar/data=!4m7!3m6!1s0x30e29ee3eabb4b35:0x8d73b75462c418a8!8m2!3d13.7377762!4d100.5587671!16s%2Fg%2F1hf2__wkq!19sChIJNUu76uOe4jARqBjEYlS3c40?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Country Road (Bar)</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.2</span> (867 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Live House</span></p>
+<p><strong>📍 Address:</strong> 51 4/51 Soi Cowboy</p>
+<p><strong>🏆 Labels:</strong> Pub-Lover</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Country+Road+%28Bar%29/data=!4m7!3m6!1s0x30e29ee310d43bb5:0xd62921e4145eeb97!8m2!3d13.7371599!4d100.5616226!16s%2Fg%2F11b70cj7nl!19sChIJtTvUEOOe4jARl-teFOQhKdY?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>The Roof Top Bar</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.0</span> (376 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Pub</span></p>
+<p><strong>📍 Address:</strong> 222 Ratchaprarop Rd</p>
+<p><strong>🏆 Labels:</strong> Pub-Lover</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/The+Roof+Top+Bar/data=!4m7!3m6!1s0x30e29ec87dae7525:0x725ac764fdc8c7fe!8m2!3d13.754576!4d100.540302!16s%2Fg%2F1hc3j67pf!19sChIJJXWufcie4jAR_sfI_WTHWnI?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Factory Coffee &amp; Brew Bar</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (3108 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿100-200</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Coffee Shop</span></p>
+<p><strong>📍 Address:</strong> 49 Phaya Thai Rd, Thanon Phaya Thai</p>
+<p><strong>🏆 Labels:</strong> Coffee-Lover</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Factory+Coffee+%26+Brew+Bar/@13.7568656,100.5323321,1065m/data=!3m2!1e3!4b1!4m6!3m5!1s0x30e29eb687f7ea03:0x2727f2026e220172!8m2!3d13.7568604!4d100.534907!16s%2Fg%2F1ptwm8lz3?entry=ttu&amp;g_ep=EgoyMDI0MTIwNC4wIKXMDSoASAFQAw%3D%3D" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>L 7 Café</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">3.6</span> (158 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Coffee Shop</span></p>
+<p><strong>📍 Address:</strong> 26 Sukhumvit 4 Alley, Khlong Toei</p>
+<p><strong>🏆 Labels:</strong> Coffee-Lover</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/L+7+Caf%C3%A9/@13.7380871,100.5503649,1065m/data=!3m2!1e3!4b1!4m6!3m5!1s0x30e29f708d4de147:0xb02d7228f563900f!8m2!3d13.7380819!4d100.5529398!16s%2Fg%2F11jzx9889z?entry=ttu&amp;g_ep=EgoyMDI0MTIwNC4wIKXMDSoASAFQAw%3D%3D" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>RISE COFFEE - Flagship Store</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.8</span> (1165 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿100-200</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Coffee Shop</span></p>
+<p><strong>📍 Address:</strong> 888 อาคารมหาทุนพลาซ่า ชั้น 1 ยูนิต 1, Phloen Chit Rd</p>
+<p><strong>🏆 Labels:</strong> Coffee-Lover</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/RISE+COFFEE+-+Flagship+Store/data=!4m7!3m6!1s0x30e29f4f42b19d1b:0x2880f77efa590434!8m2!3d13.7419119!4d100.5486868!16s%2Fg%2F11rggl5q2y!19sChIJG52xQk-f4jARNARZ-n73gCg?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>THE COFFEE CLUB - Holiday Inn Sukhumvit Soi 11</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.3</span> (1475 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Coffee Shop</span></p>
+<p><strong>📍 Address:</strong> nua, 30 Soi Sukhumvit 11, Klongtoey-nua, Watthana, Bangkok 10110 Klongtoey</p>
+<p><strong>🏆 Labels:</strong> Coffee-Lover</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/THE+COFFEE+CLUB+-+Holiday+Inn+Sukhumvit+Soi+11/data=!4m7!3m6!1s0x30e29ff2ec858d05:0x73f70f2fd0f9ed96!8m2!3d13.7449941!4d100.5570574!16s%2Fg%2F11h2g3w5xd!19sChIJBY2F7PKf4jARlu350C8P93M?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Artis Coffee Bangkok</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (1428 reviews)</p>
+<p><strong>💰 Average Price:</strong> ฿100-200</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Coffee Shop</span></p>
+<p><strong>📍 Address:</strong> 390, 20 Sukhumvit Soi 18</p>
+<p><strong>🏆 Labels:</strong> Coffee-Lover</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Artis+Coffee+Bangkok/data=!4m7!3m6!1s0x30e29ee2cf73e98f:0x1f200049c0f05910!8m2!3d13.7351277!4d100.5627024!16s%2Fg%2F11b7q98kzf!19sChIJj-lzz-Ke4jAREFnwwEkAIB8?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>BHAWA SPA on the eight</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.6</span> (874 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">SPA</span></p>
+<p><strong>📍 Address:</strong> 34/1 Soi Sukhumvit 8, Khlong Toei</p>
+<p><strong>🏆 Labels:</strong> Spa &amp; Relaxation</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/BHAWA+SPA+on+the+eight/@13.7409962,100.5537642,2130m/data=!3m1!1e3!4m6!3m5!1s0x30e29f0912cc7daf:0x3fff7afd7ee615de!8m2!3d13.7366824!4d100.5557268!16s%2Fg%2F1pzpp1r6f?entry=ttu&amp;g_ep=EgoyMDI0MTIwNC4wIKXMDSoASAFQAw%3D%3D" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Loft Thai Spa &amp; Wellness X Nakhon Spa - Sukhumvit 24</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.9</span> (703 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">SPA</span></p>
+<p><strong>📍 Address:</strong> 682/6 Sukhumvit Rd, Khwaeng Khlong Tan</p>
+<p><strong>🏆 Labels:</strong> Spa &amp; Relaxation</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Loft+Thai+Spa+%26+Wellness+X+Nakhon+Spa+-+Sukhumvit+24/@13.7370498,100.5602444,2130m/data=!3m1!1e3!4m6!3m5!1s0x30e29fbbb05b57f1:0xc2659a454662967f!8m2!3d13.7295778!4d100.5700548!16s%2Fg%2F11kpts21mz?entry=ttu&amp;g_ep=EgoyMDI0MTIwNC4wIKXMDSoASAFQAw%3D%3D" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>divana nurture spa</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.6</span> (366 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Aroma service</span></p>
+<p><strong>📍 Address:</strong> 71 Soi Sukhumvit 11, Khlong Toei Nuea</p>
+<p><strong>🏆 Labels:</strong> Spa &amp; Relaxation</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/divana+nurture+spa/@13.7462788,100.5563062,532m/data=!3m2!1e3!4b1!4m6!3m5!1s0x30e29ee8b4f5446d:0x577f1157337bc3df!8m2!3d13.7462762!4d100.5575937!16s%2Fg%2F11clw3tg0p?entry=ttu&amp;g_ep=EgoyMDI0MTIwNC4wIKXMDSoASAFQAw%3D%3D" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Eden The Ultimate Spa and Massage Experience</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">5.0</span> (577 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Massage spa</span></p>
+<p><strong>📍 Address:</strong> 43 15 Soi Sukhumvit 11</p>
+<p><strong>🏆 Labels:</strong> Spa &amp; Relaxation</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Eden+The+Ultimate+Spa+and+Massage+Experience/data=!4m7!3m6!1s0x30e29fa9102e7457:0x68365ec5ef53d1d9!8m2!3d13.7462943!4d100.5560448!16s%2Fg%2F11vyx4sz1_!19sChIJV3QuEKmf4jAR2dFT78VeNmg?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Spalation Bangkok</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.8</span> (264 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Massage spa</span></p>
+<p><strong>📍 Address:</strong> 22, 5 Sukhumvit Rd</p>
+<p><strong>🏆 Labels:</strong> Spa &amp; Relaxation</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Spalation+Bangkok/data=!4m7!3m6!1s0x30e29f58eb5b87f9:0x560465421b5fbba1!8m2!3d13.7395648!4d100.563255!16s%2Fg%2F11fv79kcj9!19sChIJ-Ydb61if4jARobtfG0JlBFY?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>City of Massage</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.8</span> (1887 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Massage spa</span></p>
+<p><strong>📍 Address:</strong> Rajdamri City of massage, 23, near centralworld,between Go-Ang ChickenRice Pratunam &amp; 7Eleven, near Skywalk</p>
+<p><strong>🏆 Labels:</strong> Spa &amp; Relaxation</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/City+of+Massage/data=!4m7!3m6!1s0x30e29ff5fab52b39:0x4d7e86b26732fd6a!8m2!3d13.7487514!4d100.5410504!16s%2Fg%2F11k493n3x0!19sChIJOSu1-vWf4jARav0yZ7KGfk0?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Amaranth Spa &amp; Massage</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.7</span> (622 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Massage spa</span></p>
+<p><strong>📍 Address:</strong> 19, 23 Soi Sukhumvit 19</p>
+<p><strong>🏆 Labels:</strong> Spa &amp; Relaxation</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Amaranth+Spa+%26+Massage/data=!4m7!3m6!1s0x30e29ee476f84fed:0xbf3fd10d4282baa8!8m2!3d13.739293!4d100.5595619!16s%2Fg%2F1yfjc6hhb!19sChIJ7U_4duSe4jARqLqCQg3RP78?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Happiness Massage</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.6</span> (519 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Massage spa</span></p>
+<p><strong>📍 Address:</strong> 24/2 Soi Sukhumvit 23</p>
+<p><strong>🏆 Labels:</strong> Spa &amp; Relaxation</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Happiness+Massage/data=!4m7!3m6!1s0x30e29efb5349f217:0x7cca9585df04188d!8m2!3d13.7397359!4d100.5632353!16s%2Fg%2F11f57gd2gy!19sChIJF_JJU_ue4jARjRgE34WVynw?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>URI Spa &amp; Massage</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.9</span> (284 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Massage spa</span></p>
+<p><strong>📍 Address:</strong> 1st floor, Supalai Premier Place Asoke Condominium, Asok Montri Rd</p>
+<p><strong>🏆 Labels:</strong> Spa &amp; Relaxation</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/URI+Spa+%26+Massage/data=!4m7!3m6!1s0x85ae0ce0fcf55441:0x1ff3701d8806dc82!8m2!3d13.7444718!4d100.5626845!16s%2Fg%2F11vjqhz6tp!19sChIJQVT1_OAMroURgtwGiB1w8x8?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Health Land Asoke</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.2</span> (7161 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">SPA</span></p>
+<p><strong>📍 Address:</strong> 55, 100 Pi Sayam Samakhom Alley</p>
+<p><strong>🏆 Labels:</strong> Spa &amp; Relaxation</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Health+Land+Asoke/data=!4m7!3m6!1s0x30e29ee4f4503d37:0xbc69812590525a4c!8m2!3d13.7406819!4d100.560875!16s%2Fg%2F11g_p_19_!19sChIJNz1Q9OSe4jARTFpSkCWBabw?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>De Rest Spa</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.8</span> (2065 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Massage spa</span></p>
+<p><strong>📍 Address:</strong> BTS Chidlom Exit-2, Maneeya Building 3rd Floor Phloen Chit Rd</p>
+<p><strong>🏆 Labels:</strong> Spa &amp; Relaxation</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/De+Rest+Spa/data=!4m7!3m6!1s0x30e29eda6007ec57:0xac5860f054ec6135!8m2!3d13.7439815!4d100.5420391!16s%2Fg%2F11f4lk2cgv!19sChIJV-wHYNqe4jARNWHsVPBgWKw?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Plant Day Spa PloenChit Tower B</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.9</span> (677 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">SPA</span></p>
+<p><strong>📍 Address:</strong> 15, Woodberry Common Building B , 2 Floors</p>
+<p><strong>🏆 Labels:</strong> Spa &amp; Relaxation</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Plant+Day+Spa+PloenChit+Tower+B/data=!4m7!3m6!1s0x30e29f636369a633:0xfc03365c7691acce!8m2!3d13.7404873!4d100.5495963!16s%2Fg%2F11rvhdkyrr!19sChIJM6ZpY2Of4jARzqyRdlw2A_w?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Namah Massage &amp; Spa</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.5</span> (150 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Massage spa</span></p>
+<p><strong>📍 Address:</strong> Ambassador hotel, Soi Sukhumvit 11</p>
+<p><strong>🏆 Labels:</strong> Spa &amp; Relaxation</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Namah+Massage+%26+Spa/data=!4m7!3m6!1s0x30e29fcf868b0e43:0xbb23c810483d28a4!8m2!3d13.7417527!4d100.5565446!16s%2Fg%2F11vws7xf5h!19sChIJQw6Lhs-f4jARpCg9SBDII7s?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Let's Relax Spa - The Allez Sukhumvit 13</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (382 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">SPA</span></p>
+<p><strong>📍 Address:</strong> ็็ํํHYATT REGENCY ชั้น 3 ถนน Soi Sukhumvit 13</p>
+<p><strong>🏆 Labels:</strong> Spa &amp; Relaxation</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Let%27s+Relax+Spa+-+The+Allez+Sukhumvit+13/data=!4m7!3m6!1s0x30e29fd1e60479bb:0x613565391c35bbf9!8m2!3d13.7399196!4d100.55687!16s%2Fg%2F11gy1kp8qx!19sChIJu3kE5tGf4jAR-bs1HDllNWE?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>Healthy Massage Sukhumvit 19</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.6</span> (1611 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">Massage spa</span></p>
+<p><strong>📍 Address:</strong> 16, 25-26 Sukhumvit 19 Alley</p>
+<p><strong>🏆 Labels:</strong> Spa &amp; Relaxation</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/Healthy+Massage+Sukhumvit+19/data=!4m7!3m6!1s0x4dba88cfc38cec7b:0x3e0bde8d41c54356!8m2!3d13.7391111!4d100.5601123!16s%2Fg%2F11rgnk8sws!19sChIJe-yMw8-Iuk0RVkPFQY3eCz4?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+<div class="restaurant">
+<div class="restaurant-content">
+<h2>The Silk Spa</h2>
+<p><strong>⭐ Rating:</strong> <span class="rating">4.4</span> (222 reviews)</p>
+<p><strong>💰 Average Price:</strong> nan</p>
+<p><strong>🏷️ Tag:</strong> <span class="tag">SPA</span></p>
+<p><strong>📍 Address:</strong> ซอย 13 Sukhumvit Rd</p>
+<p><strong>🏆 Labels:</strong> Spa &amp; Relaxation</p>
+</div>
+<a class_="map-button-animated" href="https://www.google.com/maps/place/The+Silk+Spa/data=!4m7!3m6!1s0x30e29ee6a67cfb2b:0xec106c70fbece3ba!8m2!3d13.7410168!4d100.5576994!16s%2Fg%2F1yfjjhh8l!19sChIJK_t8puae4jARuuPs-3BsEOw?authuser=0&amp;hl=zh-CN&amp;rclk=1" target="_blank">📍 Open in Maps</a></div>
+</div>
+<footer>
+<p>© 2024 Yolo Guidebook. All rights reserved.</p>
+</footer>
+</body>
+</html>
